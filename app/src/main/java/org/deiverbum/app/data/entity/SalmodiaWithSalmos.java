@@ -70,5 +70,8 @@ public class SalmodiaWithSalmos {
             return (salmodia!=null) ? salmodia.getParte() : "";
     }
 
+    public String getOrden(){
+        return (salmodia!=null) ? String.valueOf(salmodia.getOrden()) : "0";
+    }
 
 }
