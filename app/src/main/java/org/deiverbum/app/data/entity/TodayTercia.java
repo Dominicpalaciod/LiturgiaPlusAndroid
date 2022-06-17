@@ -5,7 +5,10 @@ import androidx.room.Relation;
 
 import org.deiverbum.app.model.BiblicaBreve;
 import org.deiverbum.app.model.Himno;
+import org.deiverbum.app.model.Intermedia;
+import org.deiverbum.app.model.Laudes;
 import org.deiverbum.app.model.MetaLiturgia;
+import org.deiverbum.app.model.Oracion;
 import org.deiverbum.app.model.Salmodia;
 import org.deiverbum.app.model.Santo;
 
@@ -30,18 +33,18 @@ public class TodayTercia {
 
 
     @Relation(
-            entity = HimnoEntity.class,
+            entity = LHHimnoJoinEntity.class,
             parentColumn = "tHimnoFK",
-            entityColumn = "himnoId"
+            entityColumn = "grupoId"
     )
-    public HimnoEntity himno;
+    public HimnoWithAll himno;
 
     @Relation(
-            entity = LHBiblicaBreveEntity.class,
+            entity = LHBiblicaBreveJoinEntity.class,
             parentColumn = "tBiblicaFK",
-            entityColumn = "lecturaId"
+            entityColumn = "grupoId"
     )
-    public BiblicaBreveWithResponsorio biblica;
+    public BiblicaBreveAll biblica;
 
     @Relation(
             entity = LHSalmodiaJoinEntity.class,
@@ -57,10 +60,9 @@ public class TodayTercia {
     )
     public List<SalmodiaWithSalmos> salmos;
 
-
     @Relation(
             entity = LHOracionEntity.class,
-            parentColumn = "lOracionFK",
+            parentColumn = "tOracionFK",
             entityColumn = "grupoId"
     )
     public LHOracion lhOracion;
@@ -104,15 +106,15 @@ public class TodayTercia {
         return theModel;
     }
     public Himno getHimno(){
-        Himno modelHimno = new Himno();
-        modelHimno.setTexto(himno.getHimno());
-        return modelHimno;
+        return himno.getDomainModel();
     }
+
 
 
     public BiblicaBreve getBiblica(){
-        return  biblica.getDomainModelBreve(today.getTiempoId());
+        return  biblica.getDomainModel(today.getTiempoId());
     }
+
 
 
     public Santo getSanto(){
@@ -121,6 +123,23 @@ public class TodayTercia {
 
 
     public Salmodia getSalmodia() {
+
         return salmodia.getDomainModel();
+    }
+
+    public Oracion getOracion() {
+        return lhOracion.getDomainModel();
+    }
+
+    public Intermedia getDomainModel(){
+        Intermedia dm=new Intermedia();
+        dm.setMetaLiturgia(getMetaLiturgia());
+        //dm.setSanto(santo.getDomainModelLH());
+        dm.setHimno(getHimno());
+
+        dm.setSalmodia(getSalmodia());
+        dm.setLecturaBreve(getBiblica());
+        dm.setOracion(getOracion());
+        return dm;
     }
 }
