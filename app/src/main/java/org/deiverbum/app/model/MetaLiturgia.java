@@ -38,8 +38,6 @@ public class MetaLiturgia {
     protected int idBreviario;
     protected int idLecturas;
     protected int idHour = 0;
-
-
     protected String mensaje;
     protected String titulo;
 
@@ -380,6 +378,9 @@ public class MetaLiturgia {
     }
 
     public String getTimeForRead() {
+        this.idDia=liturgiaFeria.getDia();
+        this.idSemana=liturgiaFeria.getSemana();
+        //this.idTiempo=liturgiaFeria.getTiempoId();
         if (
                 this.idTiempo >= 8
                         || (this.idTiempo == 1 && this.idDia >16)
@@ -423,6 +424,7 @@ public class MetaLiturgia {
         sb.append(getTimeForRead());
         return sb.toString();
     }
+
 }
 
 
