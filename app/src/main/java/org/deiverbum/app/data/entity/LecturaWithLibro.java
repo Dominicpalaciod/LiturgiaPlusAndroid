@@ -46,7 +46,7 @@ public class LecturaWithLibro {
         theModel.setCita(lectura.getCita());
         //theModel.setTema(lectura.getTema());
         theModel.setTexto(lectura.getTexto());
-
+theModel.setLibro(libro.getDomainModel());
         return theModel;
     }
 
