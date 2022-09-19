@@ -8,11 +8,14 @@ import org.deiverbum.app.model.Homilia;
 import org.deiverbum.app.model.LHAntifona;
 import org.deiverbum.app.model.LHBiblicaBreveJoin;
 import org.deiverbum.app.model.LHCanticoEvangelico;
+import org.deiverbum.app.model.LHGospelCanticleCrud;
 import org.deiverbum.app.model.Liturgia;
 import org.deiverbum.app.model.LiturgiaHomiliaJoin;
+import org.deiverbum.app.model.LiturgiaHomiliaJoinCrud;
 import org.deiverbum.app.model.MisaLectura;
 import org.deiverbum.app.model.MisaLecturas;
 import org.deiverbum.app.model.SaintLife;
+import org.deiverbum.app.model.SyncStatus;
 import org.deiverbum.app.model.Today;
 
 import java.io.PrintWriter;
@@ -28,16 +31,27 @@ public class Crud  {
 
     private String table;
     private String action;
-    public List<Homilia> homilia;
+    public List<Homilia> homily;
+
+    @SerializedName("sync_status")
+    public List<SyncStatus> syncStatus;
+
+    @SerializedName("toUpdate")
+    public List<SyncStatus> updateList;
+
+    public String lastVersionLHJ;
+    public boolean haveData;
+
     public List<LiturgiaHomiliaJoin> liturgiaHomiliaJoin;
     public List<Liturgia> liturgia;
     public List<Today> today;
 
-    @SerializedName("misaLectura")
-    public List<MisaLectura> misaLectura;
+    //@SerializedName("mass_reading")
+    public List<MisaLectura> mass_reading;
 
-    @SerializedName("lhCanticoEvangelico")
-    public List<LHCanticoEvangelico> ce;
+    @SerializedName("lh_gospel_canticle")
+    public LHGospelCanticleCrud ce;
+
     @SerializedName("lhBiblicaBreveJoin")
     public List<LHBiblicaBreveJoin> bvJoin;
 
@@ -49,6 +63,12 @@ public class Crud  {
 
     @SerializedName("saintLife")
     public List<SaintLife> saintLife;
+
+    @SerializedName("sync_liturgy_homily_join")
+    public LiturgiaHomiliaJoinCrud homilyJoin;
+
+    //@SerializedName("c")
+    //public List<LiturgiaHomiliaJoin> c;
 
     public Crud() {
     }
