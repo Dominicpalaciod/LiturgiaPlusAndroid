@@ -40,16 +40,12 @@ public class SaintLifeEntity {
     public String longLife="";
 
     @NonNull
-    @ColumnInfo(name = "shortLife")
-    public String shortLife="";
-
-    @NonNull
     @ColumnInfo(name = "martyrology")
     public String martyrology="";
 
     @NonNull
-    @ColumnInfo(name = "source")
-    public String source="";
+    @ColumnInfo(name = "theSource")
+    public String theSource="";
 
     @NonNull
     public Integer getSaintFK() {
@@ -70,15 +66,6 @@ public class SaintLifeEntity {
     }
 
     @NonNull
-    public String getShortLife() {
-        return shortLife;
-    }
-
-    public void setShortLife(@NonNull String shortLife) {
-        this.shortLife = shortLife;
-    }
-
-    @NonNull
     public String getMartyrology() {
         return martyrology;
     }
@@ -88,20 +75,20 @@ public class SaintLifeEntity {
     }
 
     @NonNull
-    public String getSource() {
-        return source;
+    public String getTheSource() {
+        return theSource;
     }
 
-    public void setSource(@NonNull String source) {
-        this.source = source;
+    public void setTheSource(@NonNull String theSource) {
+        this.theSource = theSource;
     }
 
     public SaintLife getDomainModel(){
         SaintLife theModel=new SaintLife();
-        theModel.setShortLife(getShortLife());
+        theModel.setLongLife(getLongLife());
         theModel.setSaintFK(getSaintFK());
         theModel.setMartyrology(getMartyrology());
-        theModel.setSource(getSource());
+        theModel.setTheSource(getTheSource());
         return theModel;
     }
 
