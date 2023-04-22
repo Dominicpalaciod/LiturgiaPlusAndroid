@@ -7,7 +7,7 @@ import androidx.room.Transaction
 import org.deiverbum.app.data.db.dao.TodayDao
 import org.deiverbum.app.data.entity.HomilyEntity
 import org.deiverbum.app.data.entity.LiturgyEntity
-import org.deiverbum.app.data.entity.relation.TodayMixto
+import org.deiverbum.app.data.entity.relation.*
 import org.deiverbum.app.domain.model.BiblicalComment
 
 @Dao
@@ -29,7 +29,38 @@ interface TodayDao {
 
     @Transaction
     @Query(TodayDao.todayByDate)
-    fun getMixtoOfToday(theDate: Int?): TodayMixto?
+    fun getMixtoByDate(theDate: Int?): TodayMixto?
 
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getOficioByDate(theDate: Int?): TodayOficio?
+
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getLaudesByDate(theDate: Int?): TodayLaudes?
+
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getTerciaByDate(theDate: Int?): TodayTercia?
+
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getSextaByDate(theDate: Int?): TodaySexta?
+
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getNonaByDate(theDate: Int?): TodayNona?
+
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getVisperasByDate(theDate: Int?): TodayVisperas?
+
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getCompletasByDate(theDate: Int?): TodayCompletas?
+
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getHomilyByDate(theDate: Int?): TodayHomilias?
 
 }
