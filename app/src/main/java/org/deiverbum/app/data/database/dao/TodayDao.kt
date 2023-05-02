@@ -2,13 +2,11 @@ package org.deiverbum.app.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import androidx.room.RewriteQueriesToDropUnusedColumns
 import androidx.room.Transaction
 import org.deiverbum.app.data.db.dao.TodayDao
 import org.deiverbum.app.data.entity.HomilyEntity
 import org.deiverbum.app.data.entity.LiturgyEntity
 import org.deiverbum.app.data.entity.relation.*
-import org.deiverbum.app.domain.model.BiblicalComment
 
 @Dao
 interface TodayDao {
@@ -23,9 +21,9 @@ interface TodayDao {
     @Query("SELECT * FROM homily WHERE homilyID>1 LIMIT 5")
     fun getHomily(): List<HomilyEntity>
 
-    @RewriteQueriesToDropUnusedColumns
-    @Query("SELECT * FROM homily WHERE homilyID>10 LIMIT 5")
-    fun getBiblicalComment(): List<BiblicalComment>
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getCommentsByDate(theDate: Int?): TodayComentarios?
 
     @Transaction
     @Query(TodayDao.todayByDate)
@@ -62,5 +60,9 @@ interface TodayDao {
     @Transaction
     @Query(TodayDao.todayByDate)
     fun getHomilyByDate(theDate: Int?): TodayHomilias?
+
+    @Transaction
+    @Query(TodayDao.todayByDate)
+    fun getMassReadingByDate(theDate: Int?): TodayMisaLecturas?
 
 }
