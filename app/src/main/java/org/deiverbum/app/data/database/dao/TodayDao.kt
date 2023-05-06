@@ -1,12 +1,15 @@
 package org.deiverbum.app.data.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
 import org.deiverbum.app.data.db.dao.TodayDao
 import org.deiverbum.app.data.entity.HomilyEntity
 import org.deiverbum.app.data.entity.LiturgyEntity
 import org.deiverbum.app.data.entity.relation.*
+import org.deiverbum.app.model.SyncStatus
 
 @Dao
 interface TodayDao {
@@ -64,5 +67,19 @@ interface TodayDao {
     @Transaction
     @Query(TodayDao.todayByDate)
     fun getMassReadingByDate(theDate: Int?): TodayMisaLecturas?
+
+    @Transaction
+    @Query(
+        "SELECT ss.lastUpdate,ss.versionDB," +
+                "(SELECT max(todayDate) FROM today) tableName " +
+                "FROM sync_status ss;"
+    )    fun syncInfo(): SyncStatus?
+
+    @Transaction
+    @Query(
+        "SELECT ss.lastUpdate,ss.versionDB," +
+                "(SELECT max(todayDate) FROM today) tableName " +
+                "FROM sync_status ss;"
+    )    fun syncInfoo(): SyncStatus?
 
 }
