@@ -1,15 +1,15 @@
 package org.deiverbum.app.data.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import org.deiverbum.app.data.db.dao.TodayDao
 import org.deiverbum.app.data.entity.HomilyEntity
 import org.deiverbum.app.data.entity.LiturgyEntity
+import org.deiverbum.app.data.entity.TodayEntity
 import org.deiverbum.app.data.entity.relation.*
 import org.deiverbum.app.model.SyncStatus
+import org.deiverbum.app.model.Today
 
 @Dao
 interface TodayDao {
@@ -18,6 +18,9 @@ interface TodayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(note: List<PrayEntity>)
 */
+    @Insert(entity = TodayEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllTodays(today: List<Today?>)
+
     @Query("SELECT * FROM liturgy WHERE timeFK >= :from AND timeFK <= :to")
     fun getLiturgy(from: Int, to: Int): List<LiturgyEntity>
 
