@@ -1,22 +1,21 @@
 package org.deiverbum.app.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
-import org.deiverbum.app.data.db.dao.TodayDao
 import org.deiverbum.app.data.entity.*
 import org.deiverbum.app.data.entity.relation.*
 import org.deiverbum.app.model.*
 
 @Dao
 interface TodayDao {
-
+    companion object {
+        const val todayByDate = "SELECT * FROM today AS t WHERE t.todayDate =:theDate"
+    }
 /*
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(note: List<PrayEntity>)
 */
     @Insert(entity = TodayEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllTodays(today: List<Today?>)
+    suspend fun insertAllTodays(today: List<Today?>) : List<Long>
 
     @Insert(entity = TodayEntity::class, onConflict = OnConflictStrategy.REPLACE)
     fun todayInsertAll(today: List<Today?>?)
@@ -34,47 +33,47 @@ interface TodayDao {
     fun getHomily(): List<HomilyEntity>
 
     @Transaction
-    @Query(TodayDao.todayByDate)
-    fun getCommentsByDate(theDate: Int?): TodayComentarios?
+    @Query(todayByDate)
+    suspend fun getCommentsByDate(theDate: Int?): TodayComentarios?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getMixtoByDate(theDate: Int?): TodayMixto?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getOficioByDate(theDate: Int?): TodayOficio?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getLaudesByDate(theDate: Int?): TodayLaudes?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
-    fun getTerciaByDate(theDate: Int?): TodayTercia?
+    @Query(todayByDate)
+    suspend fun getTerciaByDate(theDate: Int?): TodayTercia?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getSextaByDate(theDate: Int?): TodaySexta?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getNonaByDate(theDate: Int?): TodayNona?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getVisperasByDate(theDate: Int?): TodayVisperas?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getCompletasByDate(theDate: Int?): TodayCompletas?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getHomilyByDate(theDate: Int?): TodayHomilias?
 
     @Transaction
-    @Query(TodayDao.todayByDate)
+    @Query(todayByDate)
     fun getMassReadingByDate(theDate: Int?): TodayMisaLecturas?
 
     @Transaction
@@ -442,7 +441,8 @@ interface TodayDao {
     @Delete(entity = LHPrayerEntity::class)
     fun lhPrayerDeleteAll(d: List<LHPrayer?>?)
 
-    @Query("DELETE FROM today WHERE todayDate LIKE '' || :lastYear || '____'")
-    fun deleteLastYear(lastYear: Int): Int
+    //@Query("DELETE FROM today WHERE todayDate LIKE '' || :lastYear || '____'")
+    @Query("DELETE FROM today WHERE  substr(todayDate,1,4)+0<:currentYear")
+    suspend fun deleteLastYear(currentYear: Int): Int
 
 }
