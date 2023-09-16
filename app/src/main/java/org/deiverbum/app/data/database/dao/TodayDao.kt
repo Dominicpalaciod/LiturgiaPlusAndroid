@@ -15,7 +15,7 @@ interface TodayDao {
     fun insert(note: List<PrayEntity>)
 */
     @Insert(entity = TodayEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllTodays(today: List<Today?>) : List<Long>
+     fun insertAllTodays(today: List<Today?>) : List<Long>
 
     @Insert(entity = TodayEntity::class, onConflict = OnConflictStrategy.REPLACE)
     fun todayInsertAll(today: List<Today?>?)
@@ -34,7 +34,11 @@ interface TodayDao {
 
     @Transaction
     @Query(todayByDate)
-    suspend fun getCommentsByDate(theDate: Int?): TodayComentarios?
+    fun getCommentsByDate(theDate: Int?): TodayComentarios?
+
+    @Transaction
+    @Query("SELECT * FROM saint WHERE theMonth=:theMonth AND theDay=:theDay")
+    fun getSaintByDate(theMonth: Int?,theDay: Int?): TodaySanto?
 
     @Transaction
     @Query(todayByDate)
@@ -50,7 +54,7 @@ interface TodayDao {
 
     @Transaction
     @Query(todayByDate)
-    suspend fun getTerciaByDate(theDate: Int?): TodayTercia?
+    fun getTerciaByDate(theDate: Int?): TodayTercia?
 
     @Transaction
     @Query(todayByDate)
@@ -81,7 +85,7 @@ interface TodayDao {
         "SELECT ss.lastUpdate,ss.versionDB," +
                 "(SELECT max(todayDate) FROM today) tableName " +
                 "FROM sync_status ss;"
-    )    suspend fun syncInfo(): SyncStatus?
+    )     fun syncInfo(): SyncStatus?
 
     @Transaction
     @Query(
@@ -441,8 +445,94 @@ interface TodayDao {
     @Delete(entity = LHPrayerEntity::class)
     fun lhPrayerDeleteAll(d: List<LHPrayer?>?)
 
+    @Insert(entity = BibleBookEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun bibleBookInsertAll(c: List<BibleBook?>?)
+
+    @Update(entity = BibleBookEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun bibleBookUpdateAll(u: List<BibleBook?>?)
+
+    @Delete(entity = BibleBookEntity::class)
+    fun bibleBookDeleteAll(d: List<BibleBook?>?)
+
+    @Insert(entity = KyrieEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun kyrieInsertAll(c: List<Kyrie?>?)
+
+    @Update(entity = KyrieEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun kyrieUpdateAll(u: List<Kyrie?>?)
+
+    @Delete(entity = KyrieEntity::class)
+    fun kyrieDeleteAll(d: List<Kyrie?>?)
+
+    @Insert(entity = LHInvitatoryEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun lhInvitatoryInsertAll(c: List<LHInvitatory?>?)
+
+    @Update(entity = LHInvitatoryEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun lhInvitatoryUpdateAll(u: List<LHInvitatory?>?)
+
+    @Delete(entity = LHInvitatoryEntity::class)
+    fun lhInvitatoryDeleteAll(d: List<LHInvitatory?>?)
+
+    @Insert(entity = LHKyrieJoinEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun lhKyrieJoinInsertAll(c: List<LHKyrieJoin?>?)
+
+    @Update(entity = LHKyrieJoinEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun lhKyrieJoinUpdateAll(u: List<LHKyrieJoin?>?)
+
+    @Delete(entity = LHKyrieJoinEntity::class)
+    fun lhKyrieJoinDeleteAll(d: List<LHKyrieJoin?>?)
+
+
+    @Insert(entity = LHNightPrayerEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun lhNightPrayerInsertAll(c: List<LHNightPrayer?>?)
+
+    @Update(entity = LHNightPrayerEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun lhNightPrayerUpdateAll(u: List<LHNightPrayer?>?)
+
+    @Delete(entity = LHNightPrayerEntity::class)
+    fun lhNightPrayerDeleteAll(d: List<LHNightPrayer?>?)
+
+
+    @Insert(entity = LHVirginAntiphonJoinEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun lhVirginAntiphonJoinInsertAll(c: List<LHVirginAntiphonJoin?>?)
+
+    @Update(entity = LHVirginAntiphonJoinEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun lhVirginAntiphonJoinUpdateAll(u: List<LHVirginAntiphonJoin?>?)
+
+    @Delete(entity = LHVirginAntiphonJoinEntity::class)
+    fun lhVirginAntiphonJoinDeleteAll(d: List<LHVirginAntiphonJoin?>?)
+
+
+    @Insert(entity = LiturgyColorEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun liturgyColorInsertAll(c: List<LiturgyColor?>?)
+
+    @Update(entity = LiturgyColorEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun liturgyColorUpdateAll(u: List<LiturgyColor?>?)
+
+    @Delete(entity = LiturgyColorEntity::class)
+    fun liturgyColorDeleteAll(d: List<LiturgyColor?>?)
+
+
+    @Insert(entity = LiturgyTimeEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun liturgyTimeInsertAll(c: List<LiturgyTime?>?)
+
+    @Update(entity = LiturgyTimeEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun liturgyTimeUpdateAll(u: List<LiturgyTime?>?)
+
+    @Delete(entity = LiturgyTimeEntity::class)
+    fun liturgyTimeDeleteAll(d: List<LiturgyTime?>?)
+
+
+    @Insert(entity = VirginAntiphonEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun virginAntiphonInsertAll(c: List<VirginAntiphon?>?)
+
+    @Update(entity = VirginAntiphonEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun virginAntiphonUpdateAll(u: List<VirginAntiphon?>?)
+
+    @Delete(entity = VirginAntiphonEntity::class)
+    fun virginAntiphonDeleteAll(d: List<VirginAntiphon?>?)
+
     //@Query("DELETE FROM today WHERE todayDate LIKE '' || :lastYear || '____'")
     @Query("DELETE FROM today WHERE  substr(todayDate,1,4)+0<:currentYear")
-    suspend fun deleteLastYear(currentYear: Int): Int
+     fun deleteLastYear(currentYear: Int): Int
 
 }
