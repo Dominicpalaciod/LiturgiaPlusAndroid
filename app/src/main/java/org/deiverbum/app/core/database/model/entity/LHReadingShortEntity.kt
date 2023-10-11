@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import org.deiverbum.app.core.model.data.LHLectioBrevis
 import org.deiverbum.app.util.Constants
 
 /**
@@ -17,11 +18,16 @@ import org.deiverbum.app.util.Constants
 data class LHReadingShortEntity (
     @PrimaryKey
     @ColumnInfo(name = "readingID")
-    val lecturaId:Int,
+    val lecturaId: Int,
 
     @ColumnInfo(name = "text")
-    val texto:String,
+    val texto: String,
 
     @ColumnInfo(name = "quote")
-    val cita:String
+    val cita: String
+)
+
+fun LHReadingShortEntity.asExternalModel() = LHLectioBrevis(
+    cita,
+    texto
 )

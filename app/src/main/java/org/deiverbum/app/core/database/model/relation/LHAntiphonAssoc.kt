@@ -25,15 +25,6 @@ data class LHAntiphonAssoc(
     )
     var antiphons: List<LHAntiphonWithAll>,
 
-    /*@Relation(
-        parentColumn = "groupFK",
-        entityColumn = "antiphonID",
-        associateBy = Junction(LHAntiphonJoinEntity::class)
-
-        //entity = LHAntiphonJoinEntity::class
-    )
-    var antiphonss: List<LHAntiphonEntity>,*/
-
 
 ) {
     val domainModel: MutableList<LHAntiphon>

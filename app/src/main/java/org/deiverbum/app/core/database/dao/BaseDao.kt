@@ -28,7 +28,7 @@ interface BaseDao<T> {
      * @param obj los objetos a insertar.
      */
     @Insert
-    fun insert(vararg obj: T)
+    fun insert(vararg obj: List<T>)
 
     /**
      * Actualiza un objeto en la base de datos.
@@ -44,7 +44,7 @@ interface BaseDao<T> {
      * @param obj los objetos a actualizar.
      */
     @Insert
-    fun update(vararg obj: T)
+    fun update(vararg obj: List<T>)
 
     /**
      * Borra un objeto en la base de datos.
@@ -60,5 +60,5 @@ interface BaseDao<T> {
      * @param obj los objetos a borrar.
      */
     @Insert
-    fun delete(vararg obj: T)
+    fun delete(vararg obj: List<T>)
 }

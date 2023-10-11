@@ -8,7 +8,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.deiverbum.app.core.database.dao.TodayDao
-import org.deiverbum.app.core.database.util.RoomConverter
 import org.deiverbum.app.util.Configuration.DATABASE_PATH
 import javax.inject.Singleton
 
@@ -22,7 +21,7 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideDatabase(application: Application?, roomConverter: RoomConverter): AppDatabase {
+    fun provideDatabase(application: Application?): AppDatabase {
 
         return databaseBuilder(
             application!!, AppDatabase::class.java,

@@ -3,41 +3,82 @@ package org.deiverbum.app.core.database.model.relation
 import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.BibleReadingEntity
-import org.deiverbum.app.core.database.model.entity.LHOfficeBiblicalEasterEntity
+import org.deiverbum.app.core.database.model.entity.LHAntiphonEntity
+import org.deiverbum.app.core.database.model.entity.LHEasterBiblicalEntity
+import org.deiverbum.app.core.database.model.entity.LHPsalmEntity
 import org.deiverbum.app.core.database.model.entity.PrayerEntity
+import org.deiverbum.app.core.model.data.LHAntiphon
 import org.deiverbum.app.core.model.data.LHOfficeBiblicalEaster
+import org.deiverbum.app.core.model.data.LHPsalm
+import org.deiverbum.app.core.model.data.Oratio
 
 /**
+ *
+ * Obtiene la lectura bíblica del Oficio de Lecturas
+ * con su responsorio, usando la relación expresada en [LHOfficeBiblicalWithAll].
+ * Las tablas que se relacionan aquí son **`lh_office_biblical_join`** (`groupID`)  y **`lh_office_biblical`** (`groupFK`).
+ *
  * @author A. Cedano
  * @version 1.0
  * @since 2023.1
  */
 data class LHOfficeEasterAll(
     @Embedded
-    var biblical: LHOfficeBiblicalEasterEntity,
+    var entity: LHEasterBiblicalEntity,
 
     @Relation(
         parentColumn = "readingFK",
         entityColumn = "readingID",
         entity = BibleReadingEntity::class
     )
-    var reading: BibleReadingWithBook,
+    var lectio: BibleReadingWithBook,
 
-    @Relation(parentColumn = "prayerFK", entityColumn = "prayerID", entity = PrayerEntity::class)
-    var prayer: PrayerEntity
-) {
-    val domainModel: LHOfficeBiblicalEaster
-        get() {
-            val dm = LHOfficeBiblicalEaster()
-            dm.setOrden(biblical.theOrder)
-            dm.theme = biblical.theme
-            dm.book = reading.libro.domainModel
-            dm.verseChapter = reading.lectura.capitulo.toString()
-            dm.verseFrom = reading.lectura.desde.toString()
-            dm.verseTo = reading.lectura.hasta.toString()
-            dm.setCita(reading.lectura.cita)
-            dm.text = reading.lectura.texto
-            dm.prayer = prayer.domainModel
-            return dm
-        }
-}
+    @Relation(
+        parentColumn = "antiphonFK",
+        entityColumn = "antiphonID",
+        entity = LHAntiphonEntity::class
+    )
+    var antiphona: LHAntiphonEntity?,
+
+    @Relation(
+        parentColumn = "psalmFK",
+        entityColumn = "psalmID",
+        entity = LHPsalmEntity::class
+    )
+    var psalmus: LHPsalmEntity?,
+
+    @Relation(
+        parentColumn = "prayerFK",
+        entityColumn = "prayerID",
+        entity = PrayerEntity::class
+    )
+    var oratio: PrayerEntity?
+
+)
+
+fun LHOfficeEasterAll.asExternalModel() = LHOfficeBiblicalEaster(
+    lectio.asExternalModelBook(),
+    lectio.lectura.cita,
+    lectio.lectura.texto,
+    entity.theme,
+    entity.theOrder
+)
+
+fun LHOfficeEasterAll.asExternalModelAntiphona() = LHAntiphon(
+    antiphona!!.antiphonID,
+    antiphona!!.antiphon,
+    entity.theOrder
+)
+
+fun LHOfficeEasterAll.asExternalModelPsalmus() = LHPsalm(
+    entity.theOrder,
+    psalmus!!.salmoRef!!,
+    psalmus!!.salmo
+)
+
+fun LHOfficeEasterAll.asExternalModelOratio() = Oratio(
+    oratio!!.oratioId,
+    oratio!!.texto,
+    entity.theOrder
+
+)

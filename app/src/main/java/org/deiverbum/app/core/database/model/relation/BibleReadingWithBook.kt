@@ -4,6 +4,9 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.BibleBookEntity
 import org.deiverbum.app.core.database.model.entity.BibleReadingEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
+import org.deiverbum.app.core.model.data.BibleBook
+import org.deiverbum.app.core.model.data.LHLectioBrevis
 import org.deiverbum.app.core.model.data.LHOfficiumLectioPrior
 import org.deiverbum.app.core.model.data.LHResponsorium
 import org.deiverbum.app.core.model.data.LectioBiblica
@@ -22,27 +25,18 @@ data class BibleReadingWithBook(
     @Relation(parentColumn = "bookFK", entityColumn = "bookID")
     var libro: BibleBookEntity
 ) {
-    val domainModel: LectioBiblica
-        get() {
-            val theModel = LectioBiblica()
-            theModel.book = libro.domainModel
-            theModel.verseChapter = lectura.capitulo.toString()
-            theModel.verseFrom = lectura.desde.toString()
-            theModel.verseTo = lectura.hasta.toString()
-            theModel.setCita(lectura.cita)
-            theModel.text = lectura.texto
-            return theModel
-        }
+
+
     val domainModelMisa: MissaeLectionum
         get() {
-            val theModel = MissaeLectionum()
-            theModel.book = libro.domainModel
+            val theModel = MissaeLectionum("", "BibleReadingWithBook")
+            /*theModel.book = libro.domainModel
             theModel.verseChapter = lectura.capitulo.toString()
             theModel.verseFrom = lectura.desde.toString()
             theModel.verseTo = lectura.hasta.toString()
             theModel.setCita(lectura.cita)
             theModel.text = lectura.texto
-            theModel.book = libro.domainModel
+            theModel.book = libro.domainModel*/
             return theModel
         }
     val domainModelOficio: LHOfficiumLectioPrior
@@ -57,3 +51,19 @@ data class BibleReadingWithBook(
             return theModel
         }
 }
+
+fun BibleReadingWithBook.asExternalModelBrevis() = LHLectioBrevis(
+    lectura.cita,
+    lectura.texto
+)
+
+fun BibleReadingWithBook.asExternalModel() = LectioBiblica(
+    libro.asExternalModel(),
+    lectura.cita,
+    lectura.texto
+)
+
+fun BibleReadingWithBook.asExternalModelBook(): BibleBook {
+    return libro.asExternalModel()
+}
+

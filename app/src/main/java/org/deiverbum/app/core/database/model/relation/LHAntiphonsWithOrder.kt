@@ -13,7 +13,7 @@ import org.deiverbum.app.core.model.data.LHAntiphon
  */
 data class LHAntiphonsWithOrder(
     @Embedded
-    var joinEntity: LHAntiphonJoinEntity,
+    var join: LHAntiphonJoinEntity,
 
     @Relation(
         parentColumn = "antiphonFK",
@@ -21,20 +21,10 @@ data class LHAntiphonsWithOrder(
         entity = LHAntiphonEntity::class
     )
     var antiphonEntity: LHAntiphonEntity
-) {
-
-    val antiphon: String
-        get() = antiphonEntity.antiphon
-
-    val theOrder: Int
-        get() = 1//joinEntity.theOrder
-
-
-}
+)
 
 fun LHAntiphonsWithOrder.asExternalModel() = LHAntiphon(
     antiphonID = antiphonEntity.antiphonID,
     antiphon = antiphonEntity.antiphon,
-    1//theOrder=joinEntity.theOrder
-
+    join.theOrder
 )

@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
-import org.deiverbum.app.core.model.data.MissaeLectionum
 import org.deiverbum.app.util.Constants
 
 /**
@@ -43,12 +42,9 @@ data class MassReadingEntity(
 
     @ColumnInfo(name = "theme")
     val tema: String
-) {
-    val domainModel: MissaeLectionum
-        get() {
-            val theModel = MissaeLectionum()
-            theModel.tema = tema
-            theModel.setOrden(orden)
-            return theModel
-        }
-}
+)
+
+/*fun MassReadingEntity.asExternalModel() = MissaeLectionum(
+    tema,
+    orden
+)*/

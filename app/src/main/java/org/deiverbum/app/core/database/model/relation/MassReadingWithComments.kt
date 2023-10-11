@@ -35,7 +35,7 @@ data class MassReadingWithComments(
         get() {
             val theModel = lecturaOne.domainModelMisa
             theModel.tema = misaLectura.tema
-            theModel.setOrden(misaLectura.orden)
+            //theModel.setOrden(misaLectura.orden)
             return theModel
         }
     val domainModel: MutableList<BibleComment>
@@ -45,7 +45,7 @@ data class MassReadingWithComments(
                 for (item in lectura) {
                     val theModel = item.domainModel
                     val biblica = biblicaMisa
-                    biblica.setOrden(misaLectura.orden)
+                    //biblica.setOrden(misaLectura.orden)
                     theModel.biblica = biblica
                     listModel.add(theModel)
                 }

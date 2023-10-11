@@ -44,3 +44,12 @@ data class BibleBookEntity (
             return theModel
         }
 }
+
+fun BibleBookEntity.asExternalModel() = BibleBook(
+    libroId,
+    bookType,
+    shortName,
+    longName,
+    liturgyName,
+    orderName
+)

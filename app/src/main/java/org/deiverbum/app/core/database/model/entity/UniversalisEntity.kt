@@ -426,6 +426,13 @@ data class UniversalisEntity(
     var nightPrayerFK: Int,
 )
 
+/**
+ * Retorna un objeto [Universalis] sólo con los datos necesarios para la capa de datos externa.
+ *
+ * @author A. Cedano
+ * @since 2023.1.3
+ */
+
 fun UniversalisEntity.asExternalModel() = Universalis(
     todayDate = todayDate,
     timeFK = timeFK,

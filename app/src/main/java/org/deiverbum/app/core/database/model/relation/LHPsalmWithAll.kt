@@ -43,10 +43,12 @@ data class LHPsalmWithAll(
         get() = if (!psalmEntity.salmoRef.isNullOrEmpty()) psalmEntity.salmoRef!! else ""
 
     val theme: String
-        get() = if (!themeEntity?.tema.isNullOrEmpty()) themeEntity?.tema!! else ""
+        get() =
+            if (!themeEntity?.tema.isNullOrEmpty()) themeEntity?.tema!! else ""
 
     val thePart: Int?
-        get() = if (psalmodyEntity.thePart != null) psalmodyEntity.thePart else 0
+        get() =
+            if (psalmodyEntity.thePart != null) psalmodyEntity.thePart else 0
 
     val theOrder: Int
         get() = psalmodyEntity.theOrder
@@ -57,6 +59,6 @@ fun LHPsalmWithAll.asExternalModel() = LHPsalm(
     quote = theQuote,
     theme = theme,
     epigraph = epigraph,
-    thePart = psalmodyEntity.thePart,
+    thePart = thePart!!,
     psalm = psalm
 )

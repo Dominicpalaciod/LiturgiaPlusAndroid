@@ -4,6 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.LiturgyEntity
 import org.deiverbum.app.core.database.model.entity.LiturgyTimeEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
+import org.deiverbum.app.core.model.data.LiturgyTime
 
 /**
  * @author A. Cedano
@@ -17,3 +19,7 @@ data class LiturgyTimeAssoc(
     @Relation(parentColumn = "timeFK", entityColumn = "timeID")
     val entity: LiturgyTimeEntity
 )
+
+fun LiturgyTimeAssoc.asExternalModel(): LiturgyTime = (
+        entity.asExternalModel()
+        )

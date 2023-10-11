@@ -106,10 +106,6 @@ interface TodayDao {
 
     }
 
-    @Transaction
-    @Query("SELECT * FROM universalis JOIN liturgy  on universalis.liturgyFK=liturgy.liturgyID where todayDate=:theDate")
-    fun getUniversalisByDate(theDate: Int): TodayCompletas
-
     @Query("SELECT * from lh_hymn where hymnID=1")
     fun getHymById(): Flow<LHHymnEntity>
 
@@ -122,57 +118,63 @@ interface TodayDao {
     @Delete(entity = TodayEntity::class)
     fun todayDeleteAll(list: List<Today>)
 
-    @Query("SELECT * FROM homily WHERE homilyID>1 LIMIT 5")
-    fun getHomily(): List<HomilyEntity>
+    @Transaction
+    @Query(universalisByDate)
+    fun getCommentariiByDate(theDate: Int): CommentariiLocal
 
     @Transaction
     @Query(universalisByDate)
-    fun getCommentsByDate(theDate: Int): TodayComentarios
+    fun getOfficiumByDate(theDate: Int): LHOfficiumLocal
 
     @Transaction
-    @Query(universalisByDate)
-    fun getOficioByDate(theDate: Int): TodayOficio
+    @Query("SELECT * FROM lh_easter_biblical_join WHERE groupID=:easterCode")
+    //@Query("SELECT * FROM lh_easter_biblical WHERE groupFK=:easterCode ORDER BY theOrder")
 
+    //@Query("SELECT * FROM lh_office_biblical_easter WHERE groupFK=:easterCode")
+    //@Query("SELECT * FROM universalis u join lh_office_biblical_easter_copia j on u.oBiblicalFK=j.groupID WHERE j.groupID=:easterCode")
+    //@Query("SELECT * FROM universalis u join lh_office_biblical_easter j on u.oBiblicalFK=j.groupFK  where groupFK=:easterCode")
+
+    fun getOfficiumPascuaByDate(easterCode: Int): LocalOfficiumPascua
 
     @Transaction
     @Query("SELECT * FROM saint WHERE theMonth=:theMonth AND theDay=:theDay")
-    fun getSaintByDate(theMonth: Int?, theDay: Int?): TodaySanto?
+    fun getSanctiByDate(theMonth: Int?, theDay: Int?): SanctiLocal?
 
     @Transaction
     @Query(universalisByDate)
-    fun getMixtoByDate(theDate: Int?): TodayMixto
+    fun getMixtumByDate(theDate: Int?): LHMixtumLocal
 
     @Transaction
     @Query(universalisByDate)
-    fun getLaudesByDate(theDate: Int?): TodayLaudes
-
-    @Transaction
-    @Query("SELECT * FROM universalis WHERE todayDate =:theDate")
-    fun getTerciaByDate(theDate: Int?): LHTerciaLocal
+    fun getLaudesByDate(theDate: Int?): LHLaudesLocal
 
     @Transaction
     @Query(universalisByDate)
-    fun getSextaByDate(theDate: Int?): TodaySexta
+    fun getTertiamByDate(theDate: Int?): LHTertiamLocal
 
     @Transaction
     @Query(universalisByDate)
-    fun getNonaByDate(theDate: Int?): TodayNona
+    fun getSextamByDate(theDate: Int?): LHSextamLocal
 
     @Transaction
     @Query(universalisByDate)
-    fun getVisperasByDate(theDate: Int?): TodayVisperas
+    fun getNonamByDate(theDate: Int?): LHNonamLocal
 
     @Transaction
     @Query(universalisByDate)
-    fun getCompletasByDate(theDate: Int?): TodayCompletas
+    fun getVesperasByDate(theDate: Int?): LHVesperasLocal
 
     @Transaction
     @Query(universalisByDate)
-    fun getHomilyByDate(theDate: Int?): TodayHomilias
+    fun getCompletoriumByDate(theDate: Int?): LHCompletoriumLocal
 
     @Transaction
     @Query(universalisByDate)
-    fun getMassReadingByDate(theDate: Int?): TodayMisaLecturas
+    fun getHomiliaeByDate(theDate: Int?): HomiliaeLocal
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getMissaeLectionumByDate(theDate: Int?): MissaeLectionumLocal
 
     @get:Query("SELECT * FROM sync_status")
     val allSyncStatus: SyncStatus

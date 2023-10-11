@@ -13,7 +13,7 @@ import org.deiverbum.app.core.model.data.MissaeLectionum
  */
 data class MassReadingWithAll(
     @Embedded
-    val massReadingEntity: MassReadingEntity,
+    val entity: MassReadingEntity,
 
     @Relation(
         parentColumn = "readingFK",
@@ -24,10 +24,20 @@ data class MassReadingWithAll(
 ) {
     val domainModel: MissaeLectionum
         get() {
-            val theModel = lectura.domainModelMisa
-            theModel.readingID = massReadingEntity.readingFK
-            theModel.tema = massReadingEntity.tema
-            theModel.setOrden(massReadingEntity.orden)
+
+            val theModel = MissaeLectionum("", "MassReadingWithAll")
+            //theModel.readingID = massReadingEntity.readingFK
+            //theModel.tema = massReadingEntity.tema
+            //theModel.setOrden(massReadingEntity.orden)
             return theModel
         }
 }
+
+fun MassReadingWithAll.asExternalModel() = MissaeLectionum(
+    entity.orden,
+    entity.tema,
+    lectura.lectura.cita,
+    lectura.lectura.texto,
+    lectura.asExternalModelBook()
+
+)

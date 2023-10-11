@@ -39,7 +39,7 @@ data class LHOfficeBiblicalWithAll(
         get() {
             val theModel = bibliaLectura.domainModelOficio
             theModel.tema = lhBiblica.theme
-            theModel.setOrden(lhBiblica.theOrder)
+            //theModel.setOrden(lhBiblica.theOrder)
             theModel.responsorioLargo = lhResponsorio.domainModel
             return theModel
         }
