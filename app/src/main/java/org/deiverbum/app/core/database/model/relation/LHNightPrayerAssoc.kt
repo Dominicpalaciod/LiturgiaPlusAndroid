@@ -46,7 +46,7 @@ data class LHNightPrayerAssoc(
         parentColumn = "nuncDimitisFK",
         entityColumn = "groupID"
     )
-    var nuncDimitisFK: LHGospelCanticleWithAntiphon,
+    var nuncDimitis: LHGospelCanticleWithAntiphon,
 
     @Relation(entity = LHPrayerEntity::class, parentColumn = "prayerFK", entityColumn = "groupID")
     var prayer: LHPrayerAll,

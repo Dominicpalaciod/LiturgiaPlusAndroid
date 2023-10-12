@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.LHAntiphonEntity
 import org.deiverbum.app.core.database.model.entity.LHGospelCanticleEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.LHGospelCanticle
 
 /**
@@ -23,10 +24,7 @@ data class LHGospelCanticleWithAntiphon(
     var antifona: LHAntiphonEntity
 ) {
 
-    fun getDomainModel(tipo: Int?): LHGospelCanticle {
-        val ce = LHGospelCanticle()
-        ce.typeID = tipo!!
-        ce.lhAntiphon = antifona.domainModel
-        return ce
+    fun getDomainModel(tipo: Int): LHGospelCanticle {
+        return LHGospelCanticle(tipo, mutableListOf(antifona.asExternalModel()))
     }
 }

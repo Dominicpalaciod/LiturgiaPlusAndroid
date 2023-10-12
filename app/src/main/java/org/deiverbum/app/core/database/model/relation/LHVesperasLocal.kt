@@ -28,6 +28,13 @@ data class LHVesperasLocal(
     @Relation(entity = LiturgyEntity::class, parentColumn = "liturgyFK", entityColumn = "liturgyID")
     var liturgia: LiturgyTimeAssoc,
 
+    @Relation(
+        entity = LiturgyEntity::class,
+        parentColumn = "previousFK",
+        entityColumn = "liturgyID"
+    )
+    var primaVesperas: LiturgyTimeAssoc,
+
     @Relation(entity = LHHymnJoinEntity::class, parentColumn = "lHymnFK", entityColumn = "groupID")
     var hymnus: LHHymnAssoc,
 
@@ -68,55 +75,29 @@ data class LHVesperasLocal(
         entityColumn = "groupID"
     )
     var canticumEvangelicum: LHGospelCanticleWithAntiphon
-) {
-
-    val domainModel: Universalis
-        get() {
-            val dm = Universalis()/*
-            dm.saintFK = today.saintFK
-            dm.liturgyDay = liturgy.domainModel
-            dm.todayDate = today.todayDate
-            dm.hasSaint = today.hasSaint
-            dm.liturgyDay.typeID = 6
-            dm.timeFK = liturgy.liturgyTime.timeID*/
-            /*
-                        val bh = BreviaryHour()
-                        val visperas = Visperas()
-                        visperas.setIsPrevious(dm.previousFK)
-                        visperas.lhHymn = hymn.domainModel
-
-                        visperas.salmodia = LHPsalmody(psalms.domainModel, antiphons.domainModel)
-                        visperas.setLecturaBreve(readingShort.domainModel)
-                        visperas.setGospelCanticle(gospelCanticle.getDomainModel(6))
-                        visperas.setPreces(intercessions.domainModel)
-                        visperas.setOracion(prayer.domainModel)
-                        bh.setVisperas(visperas)
-                        dm.liturgyDay.breviaryHour = bh*/
-            return dm
-        }
-}
+)
 
 fun LHVesperasLocal.asExternalModel(): Universalis {
     val extModel = universalis.asExternalModel()
+    val liturgiaAssoc: LiturgyTimeAssoc
+    var isPrimaVesperas = false
     if (universalis.previousFK > 1) {
-
+        liturgiaAssoc = primaVesperas
+        isPrimaVesperas = true
+    } else {
+        liturgiaAssoc = liturgia
     }
+
     val breviarium = LHVesperas(
-        //invitatorium.asExternalModel(),
         hymnus.entity.asExternalModel(),
         LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
         lectioBrevis.domainModel,
         canticumEvangelicum.getDomainModel(6),
         preces.domainModel,
-        oratio.asExternalModel()
+        oratio.asExternalModel(),
+        isPrimaVesperas
     )
-    if (universalis.hasSaint == 1) {
-        //breviarium.sanctus = sanctus!!.asExternalModel()
-    }
-    extModel.liturgyTime = liturgia.entity.asExternalModel()
-    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 6)
-    extModel.liturgyDay = extLiturgyDay
-    //val theLiturgy=LiturgiaNew(breviarium)
-    //theLiturgy.name = liturgyTime.parent.nombre
+    extModel.liturgyTime = liturgiaAssoc.entity.asExternalModel()
+    extModel.liturgyDay = Liturgy(breviarium, liturgiaAssoc.parent.nombre, 6)
     return extModel
 }
