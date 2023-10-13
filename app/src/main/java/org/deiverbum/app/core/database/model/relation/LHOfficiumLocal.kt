@@ -100,12 +100,12 @@ fun LHOfficiumLocal.asExternalModel(): Universalis {
         hymnus.entity.asExternalModel(),
         psalmodia,
         LHOfficiumLectionis(
-            lectioPrima.domainModel,
-            lectioAltera.domainModel,
+            lectioPrima.asExternalModel(),
+            lectioAltera.asExternalModel(),
             officeVerse.theEntity.verse,
             universalis.oTeDeum == 1
         ),
-        oratio.domainModel
+        oratio.asExternalModel()
     )
     if (universalis.hasSaint == 1) {
         breviarium.sanctus = sanctus!!.asExternalModel()

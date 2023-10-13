@@ -24,16 +24,15 @@ data class BibleHomilyWithAll(
 
     @Relation(parentColumn = "homilyFK", entityColumn = "homilyID", entity = HomilyEntity::class)
     val homilia: HomilyAll
-) {
-    val domainModel: BibleComment
-        get() {
-            val theModel = BibleComment()
-            theModel.cita = themeEntity.biblical!!
-            theModel.tema = themeEntity.theological!!
-            theModel.ref = themeEntity.reference!!
-            theModel.paterOpus = homilia.paterOpusAll.domainModel
-            theModel.texto = homilia.homilia.texto
-            theModel.fecha = homilia.homilia.fecha.toString()
-            return theModel
-        }
-}
+)
+
+fun BibleHomilyWithAll.asExternalModel() = BibleComment(
+    homilia.paterOpusAll.asExternalModel(),
+    themeEntity.reference!!,
+    themeEntity.theological!!,
+    themeEntity.biblical!!,
+    homilia.homilia.fecha,
+    homilia.homilia.texto
+)
+
+

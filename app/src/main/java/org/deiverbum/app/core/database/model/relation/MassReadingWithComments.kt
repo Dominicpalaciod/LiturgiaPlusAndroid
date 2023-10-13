@@ -33,23 +33,18 @@ data class MassReadingWithComments(
 ) {
     private val biblicaMisa: MissaeLectionum
         get() {
-            val theModel = lecturaOne.domainModelMisa
-            theModel.tema = misaLectura.tema
-            //theModel.setOrden(misaLectura.orden)
-            return theModel
+            return lecturaOne.asExternalModelMissae(misaLectura.orden, misaLectura.tema)
         }
-    val domainModel: MutableList<BibleComment>
-        get() {
-            val listModel: MutableList<BibleComment> = ArrayList()
-            if (lectura.isNotEmpty()) {
-                for (item in lectura) {
-                    val theModel = item.domainModel
-                    val biblica = biblicaMisa
-                    //biblica.setOrden(misaLectura.orden)
-                    theModel.biblica = biblica
-                    listModel.add(theModel)
-                }
-            }
-            return listModel
+}
+
+fun MassReadingWithComments.asExternalModel(): MutableList<BibleComment> {
+    val extModel: MutableList<BibleComment> = ArrayList()
+    if (lectura.isNotEmpty()) {
+        for (item in lectura) {
+            val theModel = item.asExternalModel()
+            theModel.biblica = lecturaOne.asExternalModelMissae(misaLectura.orden, misaLectura.tema)
+            extModel.add(theModel)
         }
+    }
+    return extModel
 }

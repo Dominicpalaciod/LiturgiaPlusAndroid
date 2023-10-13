@@ -60,3 +60,8 @@ data class PaterEntity(
             return dm
         }
 }
+
+fun PaterEntity.asExternalModel() = Pater(
+    padre,
+    liturgyName
+)

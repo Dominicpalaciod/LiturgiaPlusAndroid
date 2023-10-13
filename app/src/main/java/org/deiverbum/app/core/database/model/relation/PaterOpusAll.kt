@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.PaterEntity
 import org.deiverbum.app.core.database.model.entity.PaterOpusEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.PaterOpus
 
 /**
@@ -16,14 +17,10 @@ data class PaterOpusAll(
 
     @Relation(parentColumn = "paterFK", entityColumn = "paterID")
     val paterEntity: PaterEntity
-) {
+)
 
-    val domainModel: PaterOpus
-        get() {
-            val dm = PaterOpus()
-            dm.pater = paterEntity.domainModel
-            dm.opusName = paterOpusEntity.opusName
-            dm.liturgyName = paterOpusEntity.liturgyName
-            return dm
-        }
-}
+fun PaterOpusAll.asExternalModel() = PaterOpus(
+    paterOpusEntity.opusName,
+    paterOpusEntity.liturgyName,
+    paterEntity.asExternalModel()
+)

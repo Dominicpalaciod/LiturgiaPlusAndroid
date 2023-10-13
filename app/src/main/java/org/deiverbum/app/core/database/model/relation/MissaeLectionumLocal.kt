@@ -59,7 +59,11 @@ fun MissaeLectionumLocal.asExternalModel(): Universalis {
     }
     extModel.liturgyTime = feria.entity.asExternalModel()
     val extLiturgyDay =
-        Liturgy(Missae(MissaeLectionumList(emList, join.type)), feria.parent.nombre, 10)
+        Liturgy(
+            Missae(universalis.timeFK, MissaeLectionumList(emList, join.type)),
+            feria.parent.nombre,
+            10
+        )
     extModel.liturgyDay = extLiturgyDay
     return extModel
 }

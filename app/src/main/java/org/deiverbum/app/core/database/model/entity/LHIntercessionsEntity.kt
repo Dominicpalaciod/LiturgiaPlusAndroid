@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import org.deiverbum.app.core.model.data.LHIntercession
 import org.deiverbum.app.util.Constants
 
 /**
@@ -27,4 +28,9 @@ data class LHIntercessionsEntity(
 
     @ColumnInfo(name = "intercession")
     val preces: String
+)
+
+fun LHIntercessionsEntity.asExternalModel() = LHIntercession(
+    intro,
+    preces
 )

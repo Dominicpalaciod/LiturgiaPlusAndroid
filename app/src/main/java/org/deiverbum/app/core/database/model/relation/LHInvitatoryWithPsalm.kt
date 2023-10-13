@@ -25,16 +25,7 @@ data class LHInvitatoryWithPsalm(
 
     @Relation(parentColumn = "psalmFK", entityColumn = "psalmID", entity = LHPsalmEntity::class)
     val psalm: LHPsalmEntity
-) {
-
-    val domainModel: LHPsalm
-        get() {
-            val dm = LHPsalm(1, "", "", "", 1, "")
-            dm.psalm = psalm.salmo
-            dm.quote = psalm.salmoRef!!
-            return dm
-        }
-}
+)
 
 fun LHInvitatoryWithPsalm.asExternalModel() = LHPsalm(
     theOrder = 0,

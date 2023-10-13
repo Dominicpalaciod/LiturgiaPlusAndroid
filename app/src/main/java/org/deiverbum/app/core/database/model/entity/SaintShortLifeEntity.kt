@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import org.deiverbum.app.core.model.data.LHSanctus
 import org.deiverbum.app.util.Constants
 
 /**
@@ -32,13 +31,4 @@ data class SaintShortLifeEntity(
 
     @ColumnInfo(name = "shortLife", defaultValue = "")
     val shortLife: String
-) {
-    val domainModel: LHSanctus
-        get() {
-            val theModel = LHSanctus()
-            theModel.vitaBrevis = shortLife
-            //theModel.nomen=
-            //theModel.saintFK = saintFK
-            return theModel
-        }
-}
+)

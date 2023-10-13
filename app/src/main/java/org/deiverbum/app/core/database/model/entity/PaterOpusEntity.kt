@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import org.deiverbum.app.core.model.data.PaterOpus
 import org.deiverbum.app.util.Constants
 
 /**
@@ -56,11 +57,16 @@ data class PaterOpusEntity (
     var opusYear: Int? = null,
 
     @ColumnInfo(name = "paterFK", defaultValue = "0", index = true)
-    val padreFK:Int,
+    val padreFK: Int,
 
     @ColumnInfo(name = "typeFK", defaultValue = "0")
-    var typeFK:Int,
+    var typeFK: Int,
 
     @ColumnInfo(name = "collectionFK", defaultValue = "0")
-    var collectionFK:Int
+    var collectionFK: Int
+)
+
+fun PaterOpusEntity.asExternalModel() = PaterOpus(
+    opusName,
+    liturgyName
 )

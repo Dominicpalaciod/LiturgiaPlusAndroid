@@ -6,7 +6,6 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import org.deiverbum.app.core.model.data.LHResponsoriumBrevis
 import org.deiverbum.app.util.Constants
-import org.deiverbum.app.util.Utils
 
 /**
  * Entidad para la tabla **`lh_responsory_short`** de la base de datos, que se ocupa de gestionar los responsorios de las Lecturas Breves de la Liturgia de las Horas.
@@ -22,28 +21,16 @@ import org.deiverbum.app.util.Utils
 data class LHResponsoryShortEntity (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "responsoryID")
-    val responsorioId:Int,
+    val responsorioId: Int,
 
     @ColumnInfo(name = "text")
-    val texto:String,
+    val texto: String,
 
     @ColumnInfo(name = "type")
-    var tipo:Int
-) {
-    val domainModel: LHResponsoriumBrevis
-        get() {
-            val theModel = LHResponsoriumBrevis()
-            theModel.responsoryID = responsorioId
-            theModel.text = texto
-            theModel.type = tipo
-            return theModel
-        }
+    var tipo: Int
+)
 
-    fun getDomainModel(timeId: Int?): LHResponsoriumBrevis {
-        val theModel = LHResponsoriumBrevis()
-        theModel.responsoryID = responsorioId
-        theModel.text = Utils.replaceByTime(texto, timeId!!)
-        theModel.type = tipo
-        return theModel
-    }
-}
+fun LHResponsoryShortEntity.asExternalModel() = LHResponsoriumBrevis(
+    texto,
+    tipo
+)

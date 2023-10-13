@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
-import org.deiverbum.app.core.model.data.LHSanctus
+import org.deiverbum.app.core.model.data.Sanctus
 import org.deiverbum.app.util.Constants
 
 /**
@@ -38,14 +38,12 @@ data class SaintLifeEntity(
 
     @ColumnInfo(name = "theSource")
     var theSource: String
-) {
-    val domainModel: LHSanctus
-        get() {
-            val theModel = LHSanctus()
-            /*theModel.longLife = longLife
-            theModel.saintFK = saintFK
-            theModel.martyrology = martyrology
-            theModel.theSource = theSource*/
-            return theModel
-        }
-}
+)
+
+fun SaintLifeEntity.asExternalModel(theMonth: Int, theDay: Int, nomen: String) = Sanctus(
+    theMonth,
+    theDay,
+    nomen,
+    martyrology,
+    longLife
+)

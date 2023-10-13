@@ -15,31 +15,16 @@ import org.deiverbum.app.util.Constants
  * @since 2023.1
  */
 @Entity(tableName = Constants.LH_ANTIPHON, indices = [Index(value = ["antiphon"], unique = true)])
-class LHAntiphonEntity {
-
-
-    @JvmField
+data class LHAntiphonEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "antiphonID")
-    var antiphonID = 0
+    var antiphonID: Int = 0,
 
-    @JvmField
     @ColumnInfo(name = "antiphon")
-    var antiphon = ""
-
-    val domainModel: LHAntiphon
-        get() {
-            //val dm = LHAntiphon(1,"",1,false)
-            val dm = LHAntiphon()
-            dm.antiphon = antiphon
-            return dm
-        }
-}
+    var antiphon: String = ""
+)
 
 fun LHAntiphonEntity.asExternalModel() = LHAntiphon(
     antiphonID = antiphonID,
-    antiphon = antiphon,
-
-    //a = hymnID,
-    //hymn = hymn
+    antiphon = antiphon
 )

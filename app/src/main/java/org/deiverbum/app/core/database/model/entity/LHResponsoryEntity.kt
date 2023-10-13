@@ -27,14 +27,10 @@ data class LHResponsoryEntity (
 
     @ColumnInfo(name = "type")
     val tipo:Int
-) {
+)
 
-    val domainModel: LHResponsorium
-        get() {
-            val theModel = LHResponsorium()
-            theModel.text = texto
-            theModel.type = tipo
-            theModel.source = fuente
-            return theModel
-        }
-}
+fun LHResponsoryEntity.asExternalModel() = LHResponsorium(
+    texto,
+    tipo,
+    fuente
+)

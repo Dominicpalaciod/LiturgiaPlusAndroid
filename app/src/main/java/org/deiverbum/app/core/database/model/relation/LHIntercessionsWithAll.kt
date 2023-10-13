@@ -4,7 +4,6 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.LHIntercessionsEntity
 import org.deiverbum.app.core.database.model.entity.LHIntercessionsJoinEntity
-import org.deiverbum.app.core.model.data.LHIntercession
 
 /**
  * @author A. Cedano
@@ -13,20 +12,12 @@ import org.deiverbum.app.core.model.data.LHIntercession
  */
 data class LHIntercessionsWithAll(
     @Embedded
-    val lhPatristica: LHIntercessionsJoinEntity,
+    val join: LHIntercessionsJoinEntity,
 
     @Relation(
         parentColumn = "intercessionFK",
         entityColumn = "intercessionID",
         entity = LHIntercessionsEntity::class
     )
-    val preces: LHIntercessionsEntity
-) {
-    val domainModel: LHIntercession
-        get() {
-            val theModel = LHIntercession()
-            theModel.intro = preces.intro
-            theModel.intercession = preces.preces
-            return theModel
-        }
-}
+    val entity: LHIntercessionsEntity
+)

@@ -5,7 +5,6 @@ import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.LHPrayerEntity
 import org.deiverbum.app.core.database.model.entity.PrayerEntity
 import org.deiverbum.app.core.database.model.entity.asExternalModel
-import org.deiverbum.app.core.model.data.Oratio
 
 /**
  * @author A. Cedano
@@ -18,14 +17,7 @@ data class LHPrayerAll(
 
     @Relation(parentColumn = "prayerFK", entityColumn = "prayerID", entity = PrayerEntity::class)
     var prayerEntity: PrayerEntity
-) {
-    val domainModel: Oratio
-        get() {
-            val theModel = Oratio(1, "", 1)
-            theModel.prayer = prayerEntity.texto
-            return theModel
-        }
-}
+)
 
 fun LHPrayerAll.asExternalModel() = prayerEntity.asExternalModel()
 

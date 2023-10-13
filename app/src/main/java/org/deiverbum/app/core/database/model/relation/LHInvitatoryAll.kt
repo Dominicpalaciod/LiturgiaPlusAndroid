@@ -26,26 +26,7 @@ data class LHInvitatoryAll(
         entity = LHAntiphonEntity::class
     )
     val antiphon: LHAntiphonEntity
-
-
-) {
-    val domainModel: LHInvitatory
-        get() {
-            val ps = mutableListOf(psalm.domainModel)
-            //val an=mutableListOf(antifona.domainModel)
-
-            //val dm=psalm.domainModel
-            //dm.lhAntiphon= antifona.domainModel
-            return LHInvitatory(ps, mutableListOf(antiphon.asExternalModel()))
-        }
-}
-
-/*fun LHInvitatoryAll.asExternalModel(): LHPsalmody{
-    val aList: MutableList<LHAntiphon> = ArrayList()
-    val sList: MutableList<LHPsalm> = mutableListOf(psalm.asExternalModel())
-
-    return emList
-}*/
+)
 
 fun LHInvitatoryAll.asExternalModel() = LHInvitatory(
     mutableListOf(

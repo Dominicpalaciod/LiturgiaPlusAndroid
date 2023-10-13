@@ -61,7 +61,7 @@ fun LHTertiamLocal.asExternalModel(): Universalis {
     val breviarium = LHIntermedia(
         hymnus.entity.asExternalModel(),
         LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
-        lectioBrevis.domainModel,
+        lectioBrevis.asExternalModel(),
         oratio.asExternalModel(),
         3
     )

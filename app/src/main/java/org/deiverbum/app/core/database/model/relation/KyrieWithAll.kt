@@ -19,5 +19,10 @@ data class KyrieWithAll(
         entityColumn = "kyrieID",
         entity = KyrieEntity::class
     )
-    val kyrieEntity: KyrieEntity
+    val entity: KyrieEntity
 )
+
+/*fun KyrieWithAll.asExternalModel() = Kyrie (
+    kyrieID,
+    k
+)*/

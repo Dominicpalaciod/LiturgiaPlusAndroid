@@ -4,8 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.LiturgyEntity
 import org.deiverbum.app.core.database.model.entity.LiturgyTimeEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.Liturgy
-import org.deiverbum.app.core.model.data.LiturgyTime
 
 /**
  * @author A. Cedano
@@ -14,25 +14,16 @@ import org.deiverbum.app.core.model.data.LiturgyTime
  */
 data class LiturgyWithTime(
     @Embedded
-    val liturgyEntity: LiturgyEntity,
+    val liturgiaEntity: LiturgyEntity,
 
     @Relation(parentColumn = "timeFK", entityColumn = "timeID")
     val liturgyTime: LiturgyTimeEntity
-) {
-    val domainModel: Liturgy
-        get() {
-            val dm = Liturgy()
-            dm.liturgyID = liturgyEntity.liturgiaId
-            dm.liturgyID = liturgyEntity.liturgiaId
-            dm.semana = liturgyEntity.semana
-            dm.dia = liturgyEntity.dia
-            dm.colorFK = liturgyEntity.colorFK
-            dm.name = liturgyEntity.nombre
-            val t = LiturgyTime()
-            /*t.timeID = liturgyTime.timeID
-            t.timeName = liturgyTime.timeName
-            t.liturgyName = liturgyTime.liturgyName*/
-            dm.liturgyTime = t
-            return dm
-        }
-}
+)
+
+fun LiturgyWithTime.asExternalModel() = Liturgy(
+    liturgiaEntity.semana,
+    liturgiaEntity.dia,
+    liturgiaEntity.colorFK,
+    liturgiaEntity.nombre,
+    liturgyTime.asExternalModel()
+)

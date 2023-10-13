@@ -138,7 +138,7 @@ interface TodayDao {
 
     @Transaction
     @Query("SELECT * FROM saint WHERE theMonth=:theMonth AND theDay=:theDay")
-    fun getSanctiByDate(theMonth: Int?, theDay: Int?): SanctiLocal?
+    fun getSanctiByDate(theMonth: Int?, theDay: Int?): SanctiLocal
 
     @Transaction
     @Query(universalisByDate)

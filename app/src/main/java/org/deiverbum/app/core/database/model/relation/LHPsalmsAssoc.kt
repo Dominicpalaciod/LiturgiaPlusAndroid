@@ -20,26 +20,7 @@ data class LHPsalmsAssoc(
 
     @Relation(parentColumn = "groupID", entityColumn = "groupFK", entity = LHPsalmJoinEntity::class)
     var psalms: List<LHPsalmWithAll>,
-    /*
-        @Relation(parentColumn = "groupID", entityColumn = "groupFK", entity = LHAntiphonJoinEntity::class)
-        var ant: List<LHAntiphonWithAll>*/
-) {
-    val domainModel: MutableList<LHPsalm>
-        get() {
-            val psalmsList: MutableList<LHPsalm> = ArrayList()
-            for (s in psalms) {
-                val dm = LHPsalm(1, "", "", "", 1, "")
-                dm.psalm = s.psalm
-                dm.quote = s.theQuote
-                dm.theme = s.theme
-                dm.epigraph = s.epigraph
-                //dm.part = s.thePart!!
-                dm.theOrder = s.theOrder
-                psalmsList.add(dm)
-            }
-            return psalmsList
-        }
-}
+)
 
 fun LHPsalmsAssoc.asExternalModel(): MutableList<LHPsalm> {
     val emList: MutableList<LHPsalm> = ArrayList()

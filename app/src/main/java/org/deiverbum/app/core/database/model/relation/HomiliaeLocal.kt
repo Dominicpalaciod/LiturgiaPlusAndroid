@@ -5,8 +5,10 @@ import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.LiturgyEntity
 import org.deiverbum.app.core.database.model.entity.LiturgyHomilyJoinEntity
 import org.deiverbum.app.core.database.model.entity.UniversalisEntity
-import org.deiverbum.app.core.model.data.Homily
+import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.HomilyList
+import org.deiverbum.app.core.model.data.Liturgy
+import org.deiverbum.app.core.model.data.Missae
 import org.deiverbum.app.core.model.data.Universalis
 
 /**
@@ -16,10 +18,10 @@ import org.deiverbum.app.core.model.data.Universalis
  */
 data class HomiliaeLocal(
     @Embedded
-    var today: UniversalisEntity,
+    var universalis: UniversalisEntity,
 
     @Relation(entity = LiturgyEntity::class, parentColumn = "liturgyFK", entityColumn = "liturgyID")
-    var liturgy: LiturgyWithTime,
+    var liturgia: LiturgyWithTime,
 
     @Relation(
         entity = LiturgyHomilyJoinEntity::class,
@@ -27,21 +29,20 @@ data class HomiliaeLocal(
         entityColumn = "liturgyFK"
     )
     var homilyes: List<LiturgyWithHomilies>
-) {
-    val domainModel: Universalis
-        get() {
-            val dm = Universalis()
-            dm.liturgyDay = liturgy.domainModel
-            dm.todayDate = today.todayDate
-            dm.hasSaint = today.hasSaint
-            dm.liturgyDay.typeID = 9
-            val homilyList = HomilyList()
-            val listModel: MutableList<Homily?> = ArrayList()
-            for (item in homilyes) {
-                listModel.add(item.domainModel)
-            }
-            homilyList.homilyes = listModel
-            dm.liturgyDay.homilyList = homilyList
-            return dm
-        }
+)
+
+fun HomiliaeLocal.asExternalModel(): Universalis {
+    val extModel = universalis.asExternalModel()
+    val homilyList = HomilyList()
+    for (item in homilyes) {
+        homilyList.homilyes.add(item.asExternalModel())
+    }
+    val missae = Missae(
+        universalis.timeFK,
+        homilyList
+    )
+    extModel.liturgyTime = liturgia.liturgyTime.asExternalModel()
+    val extLiturgyDay = Liturgy(missae, liturgia.liturgiaEntity.nombre, 9)
+    extModel.liturgyDay = extLiturgyDay
+    return extModel
 }

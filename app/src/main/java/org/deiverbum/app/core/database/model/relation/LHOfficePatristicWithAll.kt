@@ -5,6 +5,7 @@ import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.HomilyEntity
 import org.deiverbum.app.core.database.model.entity.LHOfficePatristicEntity
 import org.deiverbum.app.core.database.model.entity.LHResponsoryEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.LHOfficiumLectioAltera
 
 /**
@@ -29,19 +30,13 @@ data class LHOfficePatristicWithAll(
         entity = LHResponsoryEntity::class
     )
     var lhResponsorio: LHResponsoryEntity
-) {
-    val domainModelOficio: LHOfficiumLectioAltera
-        get() {
-            try {
-                val theModel = homilyAll.patristicaDomainModel
-                theModel.paterOpus = homilyAll.paterOpusAll.domainModel
-                theModel.theme = lhPatristica.tema
-                theModel.source = lhPatristica.fuente
-                theModel.theOrder = lhPatristica.orden
-                theModel.responsorioLargo = lhResponsorio.domainModel
-                return theModel
-            } catch (_: Exception) {
-            }
-            return LHOfficiumLectioAltera()
-        }
-}
+)
+
+fun LHOfficePatristicWithAll.asExternalModel() = LHOfficiumLectioAltera(
+    lhPatristica.fuente,
+    lhPatristica.tema,
+    homilyAll.homilia.texto,
+    homilyAll.paterOpusAll.asExternalModel(),
+    lhResponsorio.asExternalModel(),
+    lhPatristica.orden
+)

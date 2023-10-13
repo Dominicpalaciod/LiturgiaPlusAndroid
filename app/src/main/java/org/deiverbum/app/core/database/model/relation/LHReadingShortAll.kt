@@ -5,6 +5,7 @@ import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.LHReadingShortEntity
 import org.deiverbum.app.core.database.model.entity.LHReadingShortJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHResponsoryShortEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.LHLectioBrevis
 
 /**
@@ -35,14 +36,8 @@ data class LHReadingShortAll(
         entity = LHResponsoryShortEntity::class
     )
     val responsorio: LHResponsoryShortEntity
-) {
-    val domainModel: LHLectioBrevis
-        get() {
-            val dm = LHLectioBrevis()
-            dm.readingID = biblica.lecturaId
-            dm.text = biblica.texto
-            dm.setCita(biblica.cita)
-            dm.setResponsorio(responsorio.domainModel)
-            return dm
-        }
+)
+
+fun LHReadingShortAll.asExternalModel(): LHLectioBrevis {
+    return biblica.asExternalModel(responsorio.asExternalModel())
 }

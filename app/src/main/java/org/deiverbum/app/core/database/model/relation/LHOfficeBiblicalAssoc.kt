@@ -26,14 +26,12 @@ data class LHOfficeBiblicalAssoc(
         entity = LHOfficeBiblicalEntity::class
     )
     var biblica: List<LHOfficeBiblicalWithAll>
-) {
+)
 
-    val domainModel: MutableList<LHOfficiumLectioPrior>
-        get() {
-            val theList: MutableList<LHOfficiumLectioPrior> = ArrayList()
-            for (item in biblica) {
-                theList.add(item.domainModel)
-            }
-            return theList
-        }
+fun LHOfficeBiblicalAssoc.asExternalModel(): MutableList<LHOfficiumLectioPrior> {
+    val emList: MutableList<LHOfficiumLectioPrior> = ArrayList()
+    for (item in biblica) {
+        emList.add(item.asExternalModel())
+    }
+    return emList
 }

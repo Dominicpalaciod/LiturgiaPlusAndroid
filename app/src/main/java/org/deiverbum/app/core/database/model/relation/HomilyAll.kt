@@ -4,8 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.HomilyEntity
 import org.deiverbum.app.core.database.model.entity.PaterOpusEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.Homily
-import org.deiverbum.app.core.model.data.LHOfficiumLectioAltera
 
 /**
  * @author A. Cedano
@@ -18,26 +18,12 @@ data class HomilyAll(
 
     @Relation(parentColumn = "opusFK", entityColumn = "opusID", entity = PaterOpusEntity::class)
     var paterOpusAll: PaterOpusAll
-) {
+)
 
-    val patristicaDomainModel: LHOfficiumLectioAltera
-        get() {
-            val theModel = LHOfficiumLectioAltera()
-            theModel.text = homilia.texto
-            //theModel.padre = paterOpusAll.paterEntity.padre
-            //theModel.obra = paterOpusAll.paterOpusEntity.opusName
-            theModel.paterOpus = paterOpusAll.domainModel
-            theModel.source = homilia.numero.toString()
-            return theModel
-        }
+fun HomilyAll.asExternalModel(): Homily {
+    return homilia.asExternalModel(paterOpusAll.asExternalModel())
+}
 
-    val homilyDomailModel: Homily
-        get() {
-            val theModel = Homily()
-            theModel.homily = homilia.texto
-            theModel.homilyID = homilia.homiliaId
-            theModel.paterOpus = paterOpusAll.domainModel
-            theModel.date = homilia.fecha.toString()
-            return theModel
-        }
+fun HomilyAll.asExternalModel(tema: String): Homily {
+    return homilia.asExternalModel(paterOpusAll.asExternalModel(), tema)
 }

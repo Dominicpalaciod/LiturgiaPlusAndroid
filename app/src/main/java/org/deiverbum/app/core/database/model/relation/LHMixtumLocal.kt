@@ -139,7 +139,7 @@ data class LHMixtumLocal(
             val listModel: MutableList<MissaeLectionum?> = ArrayList()
             for (item in massReading) {
                 if (item.entity.orden >= 40) {
-                    listModel.add(item.domainModel)
+                    listModel.add(item.asExternalModel())
                 }
             }
             return listModel

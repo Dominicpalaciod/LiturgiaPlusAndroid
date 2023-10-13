@@ -22,9 +22,11 @@ data class LHGospelCanticleWithAntiphon(
         entity = LHAntiphonEntity::class
     )
     var antifona: LHAntiphonEntity
-) {
+)
 
-    fun getDomainModel(tipo: Int): LHGospelCanticle {
-        return LHGospelCanticle(tipo, mutableListOf(antifona.asExternalModel()))
-    }
+fun LHGospelCanticleWithAntiphon.asExternalModel(type: Int): LHGospelCanticle {
+    return LHGospelCanticle(type, mutableListOf(antifona.asExternalModel()))
 }
+
+
+

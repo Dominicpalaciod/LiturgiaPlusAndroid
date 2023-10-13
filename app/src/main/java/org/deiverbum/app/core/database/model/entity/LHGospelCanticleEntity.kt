@@ -32,3 +32,4 @@ data class LHGospelCanticleEntity(
     @ColumnInfo(name = "antiphonFK", index = true)
     var antifonaFK: Int
 )
+

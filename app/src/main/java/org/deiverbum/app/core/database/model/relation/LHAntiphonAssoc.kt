@@ -24,23 +24,7 @@ data class LHAntiphonAssoc(
         entity = LHAntiphonJoinEntity::class
     )
     var antiphons: List<LHAntiphonWithAll>,
-
-
-) {
-    val domainModel: MutableList<LHAntiphon>
-        get() {
-            //val dmLHPsalmody = LHPsalmody()
-            //dmLHPsalmody.theType=joinEntity.theType
-            val antiphonList: MutableList<LHAntiphon> = ArrayList()
-            for (a in antiphons) {
-                //val dm= LHAntiphon()
-                //dm.antiphon=a.antiphon
-                //dm.theOrder=a.theOrder
-                //antiphonList.add(org.deiverbum.app.core.database.model.relation.asExternalModel())
-            }
-            return antiphonList
-        }
-}
+)
 
 fun LHAntiphonAssoc.asExternalModel(): MutableList<LHAntiphon> {
     val emList: MutableList<LHAntiphon> = ArrayList()

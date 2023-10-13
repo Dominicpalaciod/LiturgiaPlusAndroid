@@ -4,6 +4,9 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.SaintEntity
 import org.deiverbum.app.core.database.model.entity.SaintLifeEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
+import org.deiverbum.app.core.model.data.Alteri
+import org.deiverbum.app.core.model.data.Liturgy
 import org.deiverbum.app.core.model.data.Universalis
 
 /**
@@ -17,17 +20,12 @@ data class SanctiLocal(
 
     @Relation(entity = SaintLifeEntity::class, parentColumn = "saintID", entityColumn = "saintFK")
     var saintLife: SaintLifeEntity,
-) {
+)
 
-    val domainModel: Universalis
-        get() {
-            val dm = Universalis()
-            dm.liturgyDay.typeID = 12
-            val saintLife = saintLife.domainModel
-            //saintLife.dia = saint.theDay.toString()
-            //saintLife.mes = saint.theMonth.toString()
-            //saintLife.vitaBrevis = s
-            dm.liturgyDay.saintLife = saintLife
-            return dm
-        }
+fun SanctiLocal.asExternalModel(): Universalis {
+    val extModel = Universalis()
+    val alteri =
+        Alteri.Sancti(saintLife.asExternalModel(saint.theMonth, saint.theDay, saint.theName))
+    extModel.liturgyDay = Liturgy(alteri, saint.theName, 11)
+    return extModel
 }

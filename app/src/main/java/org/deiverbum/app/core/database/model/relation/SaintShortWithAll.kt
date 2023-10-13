@@ -7,7 +7,6 @@ import org.deiverbum.app.core.database.model.entity.SaintEntity
 import org.deiverbum.app.core.database.model.entity.SaintLifeEntity
 import org.deiverbum.app.core.database.model.entity.SaintShortLifeEntity
 import org.deiverbum.app.core.model.data.LHSanctus
-import org.deiverbum.app.core.model.data.Sanctus
 
 /**
  * @author A. Cedano
@@ -16,7 +15,7 @@ import org.deiverbum.app.core.model.data.Sanctus
  */
 class SaintShortWithAll(
     @Embedded
-    var liturgyEntity: LiturgySaintJoinEntity,
+    var join: LiturgySaintJoinEntity,
 
     @Relation(
         parentColumn = "saintFK",
@@ -30,23 +29,10 @@ class SaintShortWithAll(
 
     @Relation(parentColumn = "saintFK", entityColumn = "saintFK", entity = SaintLifeEntity::class)
     var longLife: SaintLifeEntity
-) {
-    val domainModel: Sanctus
-        get() {
-            val dm = Sanctus()
-            val saintLife: String = if (shortLife.shortLife != "") {
-                shortLife.shortLife
-            } else {
-                longLife.martyrology
-            }
-            dm.vida = saintLife
-            dm.theName = saint.theName
-            return dm
-        }
-}
+)
 
 fun SaintShortWithAll.asExternalModel() = LHSanctus(
-    nomen = saint.theName,
+    saint.theName,
     if (shortLife.shortLife != "") {
         shortLife.shortLife
     } else {

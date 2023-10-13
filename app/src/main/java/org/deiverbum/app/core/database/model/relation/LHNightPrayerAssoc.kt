@@ -2,14 +2,18 @@ package org.deiverbum.app.core.database.model.relation
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import org.deiverbum.app.core.database.model.entity.LHAntiphonJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHGospelCanticleEntity
-import org.deiverbum.app.core.database.model.entity.LHHymnEntity
+import org.deiverbum.app.core.database.model.entity.LHHymnJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHKyrieJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHNightPrayerEntity
 import org.deiverbum.app.core.database.model.entity.LHPrayerEntity
-import org.deiverbum.app.core.database.model.entity.LHPsalmodyJoinEntity
+import org.deiverbum.app.core.database.model.entity.LHPsalmJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHReadingShortJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHVirginAntiphonJoinEntity
+import org.deiverbum.app.core.model.data.LHAntiphon
+import org.deiverbum.app.core.model.data.LHPsalm
+import org.deiverbum.app.core.model.data.LHPsalmody
 
 /**
  * @author A. Cedano
@@ -21,25 +25,31 @@ data class LHNightPrayerAssoc(
     var nightPrayer: LHNightPrayerEntity,
 
     @Relation(entity = LHKyrieJoinEntity::class, parentColumn = "kyrieFK", entityColumn = "groupID")
-    var kyrie: KyrieWithAll?,
+    var kyrie: KyrieWithAll,
 
-    @Relation(entity = LHHymnEntity::class, parentColumn = "hymnFK", entityColumn = "hymnID")
-    var hymn: LHHymnEntity,
-
+    @Relation(entity = LHHymnJoinEntity::class, parentColumn = "hymnFK", entityColumn = "groupID")
+    var hymnus: LHHymnWithAll,
 
     @Relation(
-        entity = LHPsalmodyJoinEntity::class,
-        parentColumn = "psalmFK",
-        entityColumn = "groupID"
+        entity = LHAntiphonJoinEntity::class,
+        parentColumn = "antiphonFK",
+        entityColumn = "groupFK"
     )
-    var salmodia: LHPsalmodyAssoc,
+    var antiphonae: List<LHAntiphonWithAll>,
+
+    @Relation(
+        entity = LHPsalmJoinEntity::class,
+        parentColumn = "psalmFK",
+        entityColumn = "groupFK"
+    )
+    var psalmus: List<LHPsalmWithAll>,
 
     @Relation(
         entity = LHReadingShortJoinEntity::class,
         parentColumn = "readingFK",
         entityColumn = "groupID"
     )
-    var readingFK: LHReadingShortAll,
+    var lectioBrevis: LHReadingShortAll,
 
     @Relation(
         entity = LHGospelCanticleEntity::class,
@@ -58,3 +68,17 @@ data class LHNightPrayerAssoc(
     )
     var virgin: LHVirginAntiphonWithAll
 )
+
+fun LHNightPrayerAssoc.asExternalModelPsalmodia(): LHPsalmody {
+    val lstAntiphonae: MutableList<LHAntiphon> = ArrayList()
+    val lstPsalmus: MutableList<LHPsalm> = ArrayList()
+
+    for (a in antiphonae) {
+        lstAntiphonae.add(a.asExternalModel())
+    }
+
+    for (ps in psalmus) {
+        lstPsalmus.add(ps.asExternalModel())
+    }
+    return LHPsalmody(lstPsalmus, lstAntiphonae)
+}

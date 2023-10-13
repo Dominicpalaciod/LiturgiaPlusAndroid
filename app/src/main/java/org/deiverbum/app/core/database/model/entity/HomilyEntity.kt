@@ -6,6 +6,8 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.SET_DEFAULT
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import org.deiverbum.app.core.model.data.Homily
+import org.deiverbum.app.core.model.data.PaterOpus
 import org.deiverbum.app.util.Constants
 
 /**
@@ -57,10 +59,24 @@ class HomilyEntity (
     var coleccionFK:Int,
 
     @ColumnInfo(name = "colNumber", defaultValue = "0")
-    var colDoc:Int,
+    var colDoc: Int,
 
     @ColumnInfo(name = "colParagraph", defaultValue = "0")
-    var colParrafo:Int,
+    var colParrafo: Int,
 
     @ColumnInfo(name = "homily")
-    var texto:String)
+    var texto: String
+)
+
+fun HomilyEntity.asExternalModel(paterOpus: PaterOpus) = Homily(
+    texto,
+    fecha,
+    paterOpus
+)
+
+fun HomilyEntity.asExternalModel(paterOpus: PaterOpus, tema: String) = Homily(
+    texto,
+    fecha,
+    paterOpus,
+    tema
+)

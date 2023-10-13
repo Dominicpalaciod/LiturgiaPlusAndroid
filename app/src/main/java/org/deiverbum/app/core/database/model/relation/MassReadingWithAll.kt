@@ -21,23 +21,12 @@ data class MassReadingWithAll(
         entity = BibleReadingEntity::class
     )
     var lectura: BibleReadingWithBook
-) {
-    val domainModel: MissaeLectionum
-        get() {
-
-            val theModel = MissaeLectionum("", "MassReadingWithAll")
-            //theModel.readingID = massReadingEntity.readingFK
-            //theModel.tema = massReadingEntity.tema
-            //theModel.setOrden(massReadingEntity.orden)
-            return theModel
-        }
-}
+)
 
 fun MassReadingWithAll.asExternalModel() = MissaeLectionum(
-    entity.orden,
-    entity.tema,
+    lectura.asExternalModelBook(),
     lectura.lectura.cita,
+    entity.tema,
     lectura.lectura.texto,
-    lectura.asExternalModelBook()
-
+    entity.orden,
 )

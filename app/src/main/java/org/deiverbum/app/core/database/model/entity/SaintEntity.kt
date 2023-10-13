@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import org.deiverbum.app.core.model.data.Sanctus
 import org.deiverbum.app.util.Constants
 
 /**
@@ -37,13 +36,4 @@ data class SaintEntity(
 
     @ColumnInfo(name = "commonFK", defaultValue = "0")
     var comunId: Int
-) {
-    val domainModel: Sanctus
-        get() {
-            val theModel = Sanctus()
-            theModel.setDay(theDay.toString())
-            theModel.setMonth(theMonth.toString())
-            theModel.theName = theName
-            return theModel
-        }
-}
+)

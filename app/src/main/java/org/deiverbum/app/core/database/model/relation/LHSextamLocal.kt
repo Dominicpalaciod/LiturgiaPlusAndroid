@@ -44,13 +44,13 @@ data class LHSextamLocal(
         entityColumn = "groupID"
     )
     var psalmus: LHPsalmsAssoc,
+
     @Relation(
         entity = LHReadingShortJoinEntity::class,
         parentColumn = "sBiblicalFK",
         entityColumn = "groupID"
     )
     var lectioBrevis: LHReadingShortAll,
-
 
     @Relation(entity = LHPrayerEntity::class, parentColumn = "sPrayerFK", entityColumn = "groupID")
     var oratio: LHPrayerAll,
@@ -61,12 +61,12 @@ fun LHSextamLocal.asExternalModel(): Universalis {
     val breviarium = LHIntermedia(
         hymnus.entity.asExternalModel(),
         LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
-        lectioBrevis.domainModel,
+        lectioBrevis.asExternalModel(),
         oratio.asExternalModel(),
         4
     )
     extModel.liturgyTime = liturgia.entity.asExternalModel()
-    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 3)
+    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 4)
     extModel.liturgyDay = extLiturgyDay
     return extModel
 }

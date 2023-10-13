@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import org.deiverbum.app.core.model.data.LHLectioBrevis
+import org.deiverbum.app.core.model.data.LHResponsoriumBrevis
 import org.deiverbum.app.util.Constants
 
 /**
@@ -27,7 +28,8 @@ data class LHReadingShortEntity (
     val cita: String
 )
 
-fun LHReadingShortEntity.asExternalModel() = LHLectioBrevis(
+fun LHReadingShortEntity.asExternalModel(responsorium: LHResponsoriumBrevis) = LHLectioBrevis(
     cita,
-    texto
+    texto,
+    responsorium
 )

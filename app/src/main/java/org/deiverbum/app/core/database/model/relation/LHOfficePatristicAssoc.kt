@@ -24,18 +24,13 @@ data class LHOfficePatristicAssoc(
         entityColumn = "groupFK",
         entity = LHOfficePatristicEntity::class
     )
-    var lhEntity: List<LHOfficePatristicWithAll> = emptyList()
-) {
+    var entity: List<LHOfficePatristicWithAll> = emptyList()
+)
 
-
-    val domainModel: MutableList<LHOfficiumLectioAltera>
-        get() {
-            val theList: MutableList<LHOfficiumLectioAltera> = ArrayList()
-            if (lhEntity.isNotEmpty()) {
-                for (item in lhEntity) {
-                    theList.add(item.domainModelOficio)
-                }
-            }
-            return theList
-        }
+fun LHOfficePatristicAssoc.asExternalModel(): MutableList<LHOfficiumLectioAltera> {
+    val emList: MutableList<LHOfficiumLectioAltera> = ArrayList()
+    for (item in entity) {
+        emList.add(item.asExternalModel())
+    }
+    return emList
 }

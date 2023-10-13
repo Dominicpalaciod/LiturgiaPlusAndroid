@@ -5,6 +5,7 @@ import androidx.room.Relation
 import org.deiverbum.app.core.database.model.entity.BibleReadingEntity
 import org.deiverbum.app.core.database.model.entity.LHOfficeBiblicalEntity
 import org.deiverbum.app.core.database.model.entity.LHResponsoryEntity
+import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.LHOfficiumLectioPrior
 
 /**
@@ -33,19 +34,12 @@ data class LHOfficeBiblicalWithAll(
         entity = LHResponsoryEntity::class
     )
     var lhResponsorio: LHResponsoryEntity
-) {
-
-    val domainModel: LHOfficiumLectioPrior
-        get() {
-            val theModel = bibliaLectura.domainModelOficio
-            theModel.tema = lhBiblica.theme
-            //theModel.setOrden(lhBiblica.theOrder)
-            theModel.responsorioLargo = lhResponsorio.domainModel
-            return theModel
-        }
-}
-
-fun LHOfficeBiblicalWithAll.asExternalModel() = LHOfficiumLectioPrior(
-    lhBiblica.theme,
-    lhResponsorio.domainModel
 )
+
+fun LHOfficeBiblicalWithAll.asExternalModel(): LHOfficiumLectioPrior {
+    return bibliaLectura.asExternalModelOfficium(
+        lhBiblica.theOrder,
+        lhBiblica.theme,
+        lhResponsorio.asExternalModel()
+    )
+}

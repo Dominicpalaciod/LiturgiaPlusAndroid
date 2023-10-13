@@ -62,12 +62,12 @@ fun LHNonamLocal.asExternalModel(): Universalis {
     val breviarium = LHIntermedia(
         hymnus.entity.asExternalModel(),
         LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
-        lectioBrevis.domainModel,
+        lectioBrevis.asExternalModel(),
         oratio.asExternalModel(),
         5
     )
     extModel.liturgyTime = liturgia.entity.asExternalModel()
-    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 3)
+    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 5)
     extModel.liturgyDay = extLiturgyDay
     return extModel
 }

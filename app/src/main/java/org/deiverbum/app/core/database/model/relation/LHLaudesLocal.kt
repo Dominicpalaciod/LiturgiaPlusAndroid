@@ -92,9 +92,9 @@ fun LHLaudesLocal.asExternalModel(): Universalis {
         invitatorium.asExternalModel(),
         hymnus.entity.asExternalModel(),
         LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
-        lectioBrevis.domainModel,
-        canticumEvangelicum.getDomainModel(2),
-        preces.domainModel,
+        lectioBrevis.asExternalModel(),
+        canticumEvangelicum.asExternalModel(2),
+        preces.entity.asExternalModel(),
         oratio.asExternalModel()
     )
     if (universalis.hasSaint == 1) {

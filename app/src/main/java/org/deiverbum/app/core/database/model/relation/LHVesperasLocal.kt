@@ -91,9 +91,9 @@ fun LHVesperasLocal.asExternalModel(): Universalis {
     val breviarium = LHVesperas(
         hymnus.entity.asExternalModel(),
         LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
-        lectioBrevis.domainModel,
-        canticumEvangelicum.getDomainModel(6),
-        preces.domainModel,
+        lectioBrevis.asExternalModel(),
+        canticumEvangelicum.asExternalModel(6),
+        preces.entity.asExternalModel(),
         oratio.asExternalModel(),
         isPrimaVesperas
     )

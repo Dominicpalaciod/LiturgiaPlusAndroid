@@ -13,15 +13,12 @@ import org.deiverbum.app.core.model.data.Homily
  */
 data class LiturgyWithHomilies(
     @Embedded
-    val joinEntity: LiturgyHomilyJoinEntity,
+    val join: LiturgyHomilyJoinEntity,
 
     @Relation(parentColumn = "homilyFK", entityColumn = "homilyID", entity = HomilyEntity::class)
     val homilia: HomilyAll
-) {
-    val domainModel: Homily
-        get() {
-            val dm = homilia.homilyDomailModel
-            dm.tema = joinEntity.tema
-            return dm
-        }
+)
+
+fun LiturgyWithHomilies.asExternalModel(): Homily {
+    return homilia.asExternalModel(join.tema)
 }
