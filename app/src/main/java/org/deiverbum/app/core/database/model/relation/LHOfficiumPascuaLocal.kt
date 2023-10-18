@@ -59,17 +59,21 @@ fun LocalOfficiumPascua.asExternalModel(): Universalis {
         }
     }
 
-    val extLiturgyTime = LiturgyTime(PASCUA_TIMEID, "Tiempo de Pascua", "Tiempo de Pascua")
-    val extModel = Universalis(universalis.todayDate, extLiturgyTime, universalis.timeFK)
-    extModel.liturgyDay = Liturgy(
-        LHOfficiumPascua(
-            LHPsalmody(lstPsalmus, lstAntiphonae),
-            lstLectio,
-            lstOratio
+    return Universalis(
+        universalis.todayDate,
+        universalis.timeFK,
+        Liturgy(
+            1,
+            1,
+            "Domingo de Pascua de la Resurrección del Señor",
+            LiturgyTime(PASCUA_TIMEID, "Tiempo de Pascua", "Tiempo de Pascua"),
+            LHOfficiumPascua(
+                LHPsalmody(lstPsalmus, lstAntiphonae),
+                lstLectio,
+                lstOratio,
+                "officiumpascua"
+            )
         )
     )
-    extModel.liturgyDay.name = "Domingo de Pascua de la Resurrección del Señor"
-    extModel.timeFK = PASCUA_TIMEID
-    return extModel
 }
 

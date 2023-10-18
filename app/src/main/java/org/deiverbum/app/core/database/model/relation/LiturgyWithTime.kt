@@ -23,7 +23,7 @@ data class LiturgyWithTime(
 fun LiturgyWithTime.asExternalModel() = Liturgy(
     liturgiaEntity.semana,
     liturgiaEntity.dia,
-    liturgiaEntity.colorFK,
+    //liturgiaEntity.colorFK,
     liturgiaEntity.nombre,
     liturgyTime.asExternalModel()
 )

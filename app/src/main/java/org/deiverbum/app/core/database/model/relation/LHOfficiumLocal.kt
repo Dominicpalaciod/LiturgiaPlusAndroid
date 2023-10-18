@@ -30,7 +30,7 @@ data class LHOfficiumLocal(
     var universalis: UniversalisEntity,
 
     @Relation(entity = LiturgyEntity::class, parentColumn = "liturgyFK", entityColumn = "liturgyID")
-    var liturgyTime: LiturgyTimeAssoc,
+    var liturgia: LiturgyTimeAssoc,
 
     @Relation(entity = LHHymnJoinEntity::class, parentColumn = "oHymnFK", entityColumn = "groupID")
     var hymnus: LHHymnAssoc,
@@ -105,15 +105,19 @@ fun LHOfficiumLocal.asExternalModel(): Universalis {
             officeVerse.theEntity.verse,
             universalis.oTeDeum == 1
         ),
-        oratio.asExternalModel()
+        oratio.asExternalModel(),
+        "officium"
     )
     if (universalis.hasSaint == 1) {
         breviarium.sanctus = sanctus!!.asExternalModel()
     }
-
-    extModel.liturgyTime = liturgyTime.entity.asExternalModel()
-    val extLiturgyDay = Liturgy(breviarium, liturgyTime.parent.nombre, 1)
-    extModel.liturgyDay = extLiturgyDay
+    extModel.liturgia = Liturgy(
+        liturgia.parent.semana,
+        liturgia.parent.dia,
+        liturgia.parent.nombre,
+        liturgia.entity.asExternalModel(),
+        breviarium
+    )
     return extModel
 }
 

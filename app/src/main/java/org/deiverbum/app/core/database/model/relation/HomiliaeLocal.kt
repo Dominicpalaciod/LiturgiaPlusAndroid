@@ -21,7 +21,7 @@ data class HomiliaeLocal(
     var universalis: UniversalisEntity,
 
     @Relation(entity = LiturgyEntity::class, parentColumn = "liturgyFK", entityColumn = "liturgyID")
-    var liturgia: LiturgyWithTime,
+    var liturgia: LiturgyTimeAssoc,
 
     @Relation(
         entity = LiturgyHomilyJoinEntity::class,
@@ -32,17 +32,25 @@ data class HomiliaeLocal(
 )
 
 fun HomiliaeLocal.asExternalModel(): Universalis {
-    val extModel = universalis.asExternalModel()
     val homilyList = HomilyList()
     for (item in homilyes) {
         homilyList.homilyes.add(item.asExternalModel())
     }
-    val missae = Missae(
+
+    return Universalis(
+        universalis.todayDate,
         universalis.timeFK,
-        homilyList
+        Liturgy(
+            liturgia.parent.semana,
+            liturgia.parent.dia,
+            liturgia.parent.nombre,
+            liturgia.entity.asExternalModel(),
+            Missae(
+                universalis.timeFK,
+                "missae",
+                homilyList
+            )
+        )
     )
-    extModel.liturgyTime = liturgia.liturgyTime.asExternalModel()
-    val extLiturgyDay = Liturgy(missae, liturgia.liturgiaEntity.nombre, 9)
-    extModel.liturgyDay = extLiturgyDay
-    return extModel
+
 }

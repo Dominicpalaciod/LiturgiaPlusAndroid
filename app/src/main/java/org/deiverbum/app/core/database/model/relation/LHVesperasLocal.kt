@@ -78,7 +78,6 @@ data class LHVesperasLocal(
 )
 
 fun LHVesperasLocal.asExternalModel(): Universalis {
-    val extModel = universalis.asExternalModel()
     val liturgiaAssoc: LiturgyTimeAssoc
     var isPrimaVesperas = false
     if (universalis.previousFK > 1) {
@@ -88,16 +87,24 @@ fun LHVesperasLocal.asExternalModel(): Universalis {
         liturgiaAssoc = liturgia
     }
 
-    val breviarium = LHVesperas(
-        hymnus.entity.asExternalModel(),
-        LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
-        lectioBrevis.asExternalModel(),
-        canticumEvangelicum.asExternalModel(6),
-        preces.entity.asExternalModel(),
-        oratio.asExternalModel(),
-        isPrimaVesperas
+    return Universalis(
+        universalis.todayDate,
+        universalis.timeFK,
+        Liturgy(
+            liturgiaAssoc.parent.semana,
+            liturgiaAssoc.parent.dia,
+            liturgiaAssoc.parent.nombre,
+            liturgiaAssoc.entity.asExternalModel(),
+            LHVesperas(
+                hymnus.entity.asExternalModel(),
+                LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
+                lectioBrevis.asExternalModel(),
+                canticumEvangelicum.asExternalModel(6),
+                preces.entity.asExternalModel(),
+                oratio.asExternalModel(),
+                isPrimaVesperas,
+                "vesperas"
+            )
+        )
     )
-    extModel.liturgyTime = liturgiaAssoc.entity.asExternalModel()
-    extModel.liturgyDay = Liturgy(breviarium, liturgiaAssoc.parent.nombre, 6)
-    return extModel
 }

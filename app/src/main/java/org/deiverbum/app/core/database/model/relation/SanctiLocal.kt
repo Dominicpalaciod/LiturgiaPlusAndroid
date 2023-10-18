@@ -25,7 +25,13 @@ data class SanctiLocal(
 fun SanctiLocal.asExternalModel(): Universalis {
     val extModel = Universalis()
     val alteri =
-        Alteri.Sancti(saintLife.asExternalModel(saint.theMonth, saint.theDay, saint.theName))
-    extModel.liturgyDay = Liturgy(alteri, saint.theName, 11)
-    return extModel
+        Alteri.Sancti(
+            saintLife.asExternalModel(saint.theMonth, saint.theDay, saint.theName),
+            "sancti"
+            //LiturgyTime()
+        )
+    //extModel.liturgia = Liturgy(alteri, saint.theName, 11)
+    return Universalis(
+        Liturgy(saint.theName, alteri)
+    )
 }

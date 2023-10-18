@@ -29,9 +29,9 @@ data class LHInvitatoryWithPsalm(
 
 fun LHInvitatoryWithPsalm.asExternalModel() = LHPsalm(
     theOrder = 0,
-    quote = psalm.salmoRef!!,
-    theme = "",
-    epigraph = "",
-    thePart = 0,
-    psalm = psalm.salmo
+    psalm.salmoRef!!,
+    "",
+    "",
+    0,
+    psalm.salmo
 )

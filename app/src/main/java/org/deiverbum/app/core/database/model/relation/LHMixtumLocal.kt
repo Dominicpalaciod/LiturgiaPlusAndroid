@@ -17,8 +17,6 @@ import org.deiverbum.app.core.database.model.entity.LiturgySaintJoinEntity
 import org.deiverbum.app.core.database.model.entity.MassReadingEntity
 import org.deiverbum.app.core.database.model.entity.UniversalisEntity
 import org.deiverbum.app.core.database.model.entity.asExternalModel
-import org.deiverbum.app.core.model.data.LHMixtus
-import org.deiverbum.app.core.model.data.Liturgy
 import org.deiverbum.app.core.model.data.MissaeLectionum
 import org.deiverbum.app.core.model.data.OficioEaster
 import org.deiverbum.app.core.model.data.Universalis
@@ -153,7 +151,7 @@ data class LHMixtumLocal(
             //dm.liturgyDay = liturgy.domainModel
             dm.todayDate = universalis.todayDate
             //dm.hasSaint = today.hasSaint
-            dm.liturgyDay.typeID = 0
+            dm.liturgia?.typeID = 0
             //dm.timeFK=liturgy.liturgyTime.timeID
 
             //val bh = BreviaryHour()
@@ -201,7 +199,11 @@ data class LHMixtumLocal(
 
 fun LHMixtumLocal.asExternalModel(): Universalis {
     val em = universalis.asExternalModel()
-    em.liturgyDay = Liturgy(LHMixtus(hymn.entity.asExternalModel()))
+    /*em.liturgia = Liturgy(LHMixtus(
+        hymn.entity.asExternalModel(),
+        "mixtum",
+        liturgyTime.entity.asExternalModel()
+    ))*/
     em.liturgyTime = liturgyTime.entity.asExternalModel()
     //em.liturgyDay.liturgyTime=liturgyTime.entity.asExternalModel()
     return em

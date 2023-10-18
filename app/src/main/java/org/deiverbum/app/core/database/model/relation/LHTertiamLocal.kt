@@ -56,17 +56,21 @@ data class LHTertiamLocal(
     var oratio: LHPrayerAll
 )
 
-fun LHTertiamLocal.asExternalModel(): Universalis {
-    val extModel = universalis.asExternalModel()
-    val breviarium = LHIntermedia(
-        hymnus.entity.asExternalModel(),
-        LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
-        lectioBrevis.asExternalModel(),
-        oratio.asExternalModel(),
-        3
+fun LHTertiamLocal.asExternalModel() = Universalis(
+    universalis.todayDate,
+    universalis.timeFK,
+    Liturgy(
+        liturgia.parent.semana,
+        liturgia.parent.dia,
+        liturgia.parent.nombre,
+        liturgia.entity.asExternalModel(),
+        LHIntermedia(
+            hymnus.entity.asExternalModel(),
+            LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
+            lectioBrevis.asExternalModel(),
+            oratio.asExternalModel(),
+            3,
+            "intermedia"
+        )
     )
-    extModel.liturgyTime = liturgia.entity.asExternalModel()
-    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 3)
-    extModel.liturgyDay = extLiturgyDay
-    return extModel
-}
+)

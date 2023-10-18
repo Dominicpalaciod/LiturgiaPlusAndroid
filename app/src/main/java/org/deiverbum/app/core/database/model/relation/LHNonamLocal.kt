@@ -57,17 +57,21 @@ data class LHNonamLocal(
     var oratio: LHPrayerAll,
 )
 
-fun LHNonamLocal.asExternalModel(): Universalis {
-    val extModel = universalis.asExternalModel()
-    val breviarium = LHIntermedia(
-        hymnus.entity.asExternalModel(),
-        LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
-        lectioBrevis.asExternalModel(),
-        oratio.asExternalModel(),
-        5
+fun LHNonamLocal.asExternalModel() = Universalis(
+    universalis.todayDate,
+    universalis.timeFK,
+    Liturgy(
+        liturgia.parent.semana,
+        liturgia.parent.dia,
+        liturgia.parent.nombre,
+        liturgia.entity.asExternalModel(),
+        LHIntermedia(
+            hymnus.entity.asExternalModel(),
+            LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
+            lectioBrevis.asExternalModel(),
+            oratio.asExternalModel(),
+            5,
+            "intermedia"
+        )
     )
-    extModel.liturgyTime = liturgia.entity.asExternalModel()
-    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 5)
-    extModel.liturgyDay = extLiturgyDay
-    return extModel
-}
+)

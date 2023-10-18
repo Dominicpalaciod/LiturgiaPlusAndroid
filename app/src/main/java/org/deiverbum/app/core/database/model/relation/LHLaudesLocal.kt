@@ -87,7 +87,6 @@ data class LHLaudesLocal(
 )
 
 fun LHLaudesLocal.asExternalModel(): Universalis {
-    val extModel = universalis.asExternalModel()
     val breviarium = LHLaudes(
         invitatorium.asExternalModel(),
         hymnus.entity.asExternalModel(),
@@ -95,13 +94,21 @@ fun LHLaudesLocal.asExternalModel(): Universalis {
         lectioBrevis.asExternalModel(),
         canticumEvangelicum.asExternalModel(2),
         preces.entity.asExternalModel(),
-        oratio.asExternalModel()
+        oratio.asExternalModel(),
+        "laudes"
     )
     if (universalis.hasSaint == 1) {
         breviarium.sanctus = sanctus!!.asExternalModel()
     }
-    extModel.liturgyTime = liturgia.entity.asExternalModel()
-    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 2)
-    extModel.liturgyDay = extLiturgyDay
-    return extModel
+    return Universalis(
+        universalis.todayDate,
+        universalis.timeFK,
+        Liturgy(
+            liturgia.parent.semana,
+            liturgia.parent.dia,
+            liturgia.parent.nombre,
+            liturgia.entity.asExternalModel(),
+            breviarium
+        )
+    )
 }

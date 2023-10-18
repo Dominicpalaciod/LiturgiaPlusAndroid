@@ -27,7 +27,7 @@ data class MissaeLectionumLocal(
         parentColumn = "massReadingFK",
         entityColumn = "liturgyID"
     )
-    var feria: LiturgyTimeAssoc,
+    var liturgia: LiturgyTimeAssoc,
 
     @Relation(
         entity = LiturgyEntity::class,
@@ -52,18 +52,24 @@ data class MissaeLectionumLocal(
 )
 
 fun MissaeLectionumLocal.asExternalModel(): Universalis {
-    val extModel = universalis.asExternalModel()
     val emList = ArrayList<MissaeLectionum?>()
     for (item in lectionum) {
         emList.add(item.asExternalModel())
     }
-    extModel.liturgyTime = feria.entity.asExternalModel()
-    val extLiturgyDay =
+    return Universalis(
+        universalis.todayDate,
+        universalis.timeFK,
         Liturgy(
-            Missae(universalis.timeFK, MissaeLectionumList(emList, join.type)),
-            feria.parent.nombre,
-            10
-        )
-    extModel.liturgyDay = extLiturgyDay
-    return extModel
+            liturgia.parent.semana,
+            liturgia.parent.dia,
+            liturgia.parent.nombre,
+            liturgia.entity.asExternalModel(),
+            Missae(
+                universalis.timeFK,
+                "missae",
+                MissaeLectionumList(emList, join.type)
+            ),
+
+            )
+    )
 }

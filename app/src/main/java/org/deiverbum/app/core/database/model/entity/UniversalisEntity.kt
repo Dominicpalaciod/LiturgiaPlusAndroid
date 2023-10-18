@@ -6,7 +6,6 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.squareup.moshi.JsonClass
 import org.deiverbum.app.core.model.data.Universalis
 import org.deiverbum.app.util.Constants
 
@@ -284,7 +283,7 @@ import org.deiverbum.app.util.Constants
     )
     ]
 )
-@JsonClass(generateAdapter = true)
+//@JsonClass(generateAdapter = true)
 data class UniversalisEntity(
     @PrimaryKey
     @ColumnInfo(name = "todayDate")

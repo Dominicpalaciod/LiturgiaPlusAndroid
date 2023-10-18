@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import org.deiverbum.app.core.model.data.BibleBook
 import org.deiverbum.app.core.model.data.LHLectioBrevis
 import org.deiverbum.app.core.model.data.LHResponsoriumBrevis
 import org.deiverbum.app.util.Constants
@@ -29,6 +30,7 @@ data class LHReadingShortEntity (
 )
 
 fun LHReadingShortEntity.asExternalModel(responsorium: LHResponsoriumBrevis) = LHLectioBrevis(
+    BibleBook(),
     cita,
     texto,
     responsorium

@@ -8,7 +8,6 @@ import org.deiverbum.app.core.database.model.entity.UniversalisEntity
 import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.BibleComment
 import org.deiverbum.app.core.model.data.BibleCommentList
-import org.deiverbum.app.core.model.data.Liturgy
 import org.deiverbum.app.core.model.data.Traditio
 import org.deiverbum.app.core.model.data.Universalis
 
@@ -40,9 +39,9 @@ fun CommentariiLocal.asExternalModel(): Universalis {
         allComentarios += item.asExternalModel()
     }
     emList.commentarii = allComentarios.toMutableList()
-    val traditio = Traditio.Comment(emList)
+    val traditio = Traditio.Comment(emList, "comment")
     extModel.liturgyTime = liturgia.liturgyTime.asExternalModel()
-    val extLiturgyDay = Liturgy(traditio, liturgia.liturgiaEntity.nombre, 11)
-    extModel.liturgyDay = extLiturgyDay
+    //val extLiturgyDay = Liturgy(traditio, liturgia.liturgiaEntity.nombre, 11)
+    //extModel.liturgia = extLiturgyDay
     return extModel
 }

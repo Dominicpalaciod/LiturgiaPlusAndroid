@@ -28,7 +28,7 @@ data class PrayerEntity(
     val domainModel: Oratio
         get() {
             val dm = Oratio(1, "", 1)
-            dm.prayer = texto
+            dm.oratio = texto
             return dm
         }
 }

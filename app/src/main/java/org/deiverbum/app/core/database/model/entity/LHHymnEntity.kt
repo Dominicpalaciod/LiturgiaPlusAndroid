@@ -24,5 +24,5 @@ data class LHHymnEntity(
 )
 
 fun LHHymnEntity.asExternalModel() = LHHymn(
-    hymn = hymn
+    hymnus = hymn
 )

@@ -8,7 +8,6 @@ import org.deiverbum.app.core.database.model.entity.UniversalisEntity
 import org.deiverbum.app.core.database.model.entity.asExternalModel
 import org.deiverbum.app.core.model.data.Conclusion
 import org.deiverbum.app.core.model.data.LHCompletorium
-import org.deiverbum.app.core.model.data.Liturgy
 import org.deiverbum.app.core.model.data.Universalis
 
 /**
@@ -43,11 +42,12 @@ fun LHCompletoriumLocal.asExternalModel(): Universalis {
         nightPrayer.lectioBrevis.asExternalModel(),
         nightPrayer.nuncDimitis.asExternalModel(7),
         nightPrayer.prayer.asExternalModel(),
-        conclusion,
+        conclusion, "completorium",
+        //liturgia.entity.asExternalModel()
     )
 
     extModel.liturgyTime = liturgia.entity.asExternalModel()
-    val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 7)
-    extModel.liturgyDay = extLiturgyDay
+    //val extLiturgyDay = Liturgy(breviarium, liturgia.parent.nombre, 7)
+    //extModel.liturgia = extLiturgyDay
     return extModel
 }
