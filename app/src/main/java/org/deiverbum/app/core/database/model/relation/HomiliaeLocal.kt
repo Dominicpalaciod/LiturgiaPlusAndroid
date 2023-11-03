@@ -6,7 +6,7 @@ import org.deiverbum.app.core.database.model.entity.LiturgyEntity
 import org.deiverbum.app.core.database.model.entity.LiturgyHomilyJoinEntity
 import org.deiverbum.app.core.database.model.entity.UniversalisEntity
 import org.deiverbum.app.core.database.model.entity.asExternalModel
-import org.deiverbum.app.core.model.data.HomilyList
+import org.deiverbum.app.core.model.data.Homily
 import org.deiverbum.app.core.model.data.Liturgy
 import org.deiverbum.app.core.model.data.Missae
 import org.deiverbum.app.core.model.data.Universalis
@@ -32,9 +32,12 @@ data class HomiliaeLocal(
 )
 
 fun HomiliaeLocal.asExternalModel(): Universalis {
-    val homilyList = HomilyList()
+    //val homilyList = MutableList<Homily>= ArrayList()
+    //val allComentarios: MutableList<List<BibleComment>> = ArrayList()
+    val homilyList: MutableList<Homily> = ArrayList()
+
     for (item in homilyes) {
-        homilyList.homilyes.add(item.asExternalModel())
+        homilyList.add(item.asExternalModel())
     }
 
     return Universalis(
@@ -46,6 +49,7 @@ fun HomiliaeLocal.asExternalModel(): Universalis {
             liturgia.parent.nombre,
             liturgia.entity.asExternalModel(),
             Missae(
+                false,
                 universalis.timeFK,
                 "missae",
                 homilyList

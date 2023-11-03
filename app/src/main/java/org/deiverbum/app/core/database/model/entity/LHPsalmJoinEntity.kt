@@ -48,10 +48,10 @@ import org.deiverbum.app.util.Constants
 )
 data class LHPsalmJoinEntity(
     @ColumnInfo(name = "groupFK", index = true)
-    var grupoFK: Int,
+    var groupFK: Int,
 
     @ColumnInfo(name = "readingFK", index = true)
-    var salmoFK: Int,
+    var readingFK: Int,
 
     @ColumnInfo(name = "theOrder")
     var theOrder: Int,
@@ -60,7 +60,7 @@ data class LHPsalmJoinEntity(
     var themeFK: Int?,
 
     @ColumnInfo(name = "epigraphFK", defaultValue = "NULL", index = true)
-    var epigrafeFK: Int?,
+    var epigraphFK: Int?,
 
     @ColumnInfo(name = "thePart", defaultValue = "NULL")
     var thePart: Int?

@@ -65,6 +65,7 @@ fun MissaeLectionumLocal.asExternalModel(): Universalis {
             liturgia.parent.nombre,
             liturgia.entity.asExternalModel(),
             Missae(
+                false,
                 universalis.timeFK,
                 "missae",
                 MissaeLectionumList(emList, join.type)

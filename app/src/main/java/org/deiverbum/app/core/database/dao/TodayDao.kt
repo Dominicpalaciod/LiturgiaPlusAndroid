@@ -11,6 +11,7 @@ import org.deiverbum.app.core.database.model.entity.EpigraphEntity
 import org.deiverbum.app.core.database.model.entity.HomilyEntity
 import org.deiverbum.app.core.database.model.entity.KyrieEntity
 import org.deiverbum.app.core.database.model.entity.LHAntiphonEntity
+import org.deiverbum.app.core.database.model.entity.LHAntiphonJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHGospelCanticleEntity
 import org.deiverbum.app.core.database.model.entity.LHHymnEntity
 import org.deiverbum.app.core.database.model.entity.LHHymnJoinEntity
@@ -27,6 +28,7 @@ import org.deiverbum.app.core.database.model.entity.LHOfficeVerseEntity
 import org.deiverbum.app.core.database.model.entity.LHOfficeVerseJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHPrayerEntity
 import org.deiverbum.app.core.database.model.entity.LHPsalmEntity
+import org.deiverbum.app.core.database.model.entity.LHPsalmJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHPsalmodyJoinEntity
 import org.deiverbum.app.core.database.model.entity.LHReadingShortEntity
 import org.deiverbum.app.core.database.model.entity.LHReadingShortJoinEntity
@@ -48,6 +50,7 @@ import org.deiverbum.app.core.database.model.entity.SaintEntity
 import org.deiverbum.app.core.database.model.entity.SaintLifeEntity
 import org.deiverbum.app.core.database.model.entity.SaintShortLifeEntity
 import org.deiverbum.app.core.database.model.entity.TodayEntity
+import org.deiverbum.app.core.database.model.entity.UniversalisEntity
 import org.deiverbum.app.core.database.model.entity.VirginAntiphonEntity
 import org.deiverbum.app.core.database.model.relation.*
 import org.deiverbum.app.core.model.data.BibleBook
@@ -56,6 +59,7 @@ import org.deiverbum.app.core.model.data.BibleHomilyTheme
 import org.deiverbum.app.core.model.data.Homily
 import org.deiverbum.app.core.model.data.Kyrie
 import org.deiverbum.app.core.model.data.LHAntiphon
+import org.deiverbum.app.core.model.data.LHAntiphonJoin
 import org.deiverbum.app.core.model.data.LHEpigraph
 import org.deiverbum.app.core.model.data.LHGospelCanticleTable
 import org.deiverbum.app.core.model.data.LHHymn
@@ -74,6 +78,7 @@ import org.deiverbum.app.core.model.data.LHOfficeVerseJoin
 import org.deiverbum.app.core.model.data.LHOfficiumLectioAltera
 import org.deiverbum.app.core.model.data.LHOratio
 import org.deiverbum.app.core.model.data.LHPsalm
+import org.deiverbum.app.core.model.data.LHPsalmJoin
 import org.deiverbum.app.core.model.data.LHPsalmodyJoin
 import org.deiverbum.app.core.model.data.LHReadingShortJoin
 import org.deiverbum.app.core.model.data.LHResponsoriumBrevis
@@ -96,6 +101,7 @@ import org.deiverbum.app.core.model.data.SanctusVita
 import org.deiverbum.app.core.model.data.SanctusVitaBrevis
 import org.deiverbum.app.core.model.data.SyncStatus
 import org.deiverbum.app.core.model.data.Today
+import org.deiverbum.app.core.model.data.Universalis
 import org.deiverbum.app.core.model.data.VirginAntiphon
 
 
@@ -117,6 +123,15 @@ interface TodayDao {
 
     @Delete(entity = TodayEntity::class)
     fun todayDeleteAll(list: List<Today>)
+
+    @Insert(entity = UniversalisEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun universalisInsertAll(today: List<Universalis>): List<Long>
+
+    @Update(entity = UniversalisEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun universalisUpdateAll(list: List<Universalis>)
+
+    @Delete(entity = UniversalisEntity::class)
+    fun universalisDeleteAll(list: List<Universalis>)
 
     @Transaction
     @Query(universalisByDate)
@@ -142,7 +157,7 @@ interface TodayDao {
 
     @Transaction
     @Query(universalisByDate)
-    fun getMixtumByDate(theDate: Int?): LHMixtumLocal
+    fun getMixtusByDate(theDate: Int?): LHMixtusLocal
 
     @Transaction
     @Query(universalisByDate)
@@ -179,28 +194,18 @@ interface TodayDao {
     @get:Query("SELECT * FROM sync_status")
     val allSyncStatus: SyncStatus
 
-    @Transaction
-    @Query(
-        "SELECT ss.lastUpdate,ss.versionDB," +
-                "(SELECT max(todayDate) FROM today) tableName " +
-                "FROM sync_status ss;"
-    )
-    fun allSyncStatuss(): Flow<SyncStatus>
+
 
     //@TypeConverters(MyTypeConverter::class)
-    @Transaction
-    @Query(
-        "SELECT * FROM sync_status;"
-    )
-    fun allSyncStatusss(): List<SyncStatus>
+
 
     @Query("UPDATE sync_status SET lastUpdate=:lastUpdate")
     fun syncUpdate(lastUpdate: String)
 
     @Transaction
     @Query(
-        "SELECT ss.lastUpdate,ss.versionDB," +
-                "(SELECT max(todayDate) FROM today) tableName " +
+        "SELECT ss.lastUpdate,ss.version," +
+                "(SELECT max(todayDate) FROM universalis) lastDate " +
                 "FROM sync_status ss;"
     )
     fun syncInfo(): SyncStatus
@@ -397,6 +402,25 @@ interface TodayDao {
 
     @Delete(entity = LHPsalmodyJoinEntity::class)
     fun lhPsalmodyJoinDeleteAll(d: List<LHPsalmodyJoin>)
+
+    @Insert(entity = LHPsalmJoinEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun lhPsalmJoinInsertAll(c: List<LHPsalmJoin>)
+
+    @Update(entity = LHPsalmJoinEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun lhPsalmJoinUpdateAll(u: List<LHPsalmJoin>): Int
+
+    @Delete(entity = LHPsalmJoinEntity::class)
+    fun lhPsalmJoinDeleteAll(d: List<LHPsalmJoin>): Int
+
+    @Delete(entity = LHAntiphonJoinEntity::class)
+    fun lhAntiphonJoinDeleteAll(d: List<LHAntiphonJoin>)
+
+    @Insert(entity = LHAntiphonJoinEntity::class, onConflict = OnConflictStrategy.IGNORE)
+    fun lhAntiphonJoinInsertAll(c: List<LHAntiphonJoin>)
+
+    @Update(entity = LHAntiphonJoinEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    fun lhAntiphonJoinUpdateAll(u: List<LHAntiphonJoin>)
+
 
     @Insert(entity = LHAntiphonEntity::class, onConflict = OnConflictStrategy.IGNORE)
     fun lhAntiphonInsertAll(c: List<LHAntiphon>)

@@ -87,7 +87,9 @@ data class LHLaudesLocal(
 )
 
 fun LHLaudesLocal.asExternalModel(): Universalis {
+
     val breviarium = LHLaudes(
+        universalis.hasSaint == 1,
         invitatorium.asExternalModel(),
         hymnus.entity.asExternalModel(),
         LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),

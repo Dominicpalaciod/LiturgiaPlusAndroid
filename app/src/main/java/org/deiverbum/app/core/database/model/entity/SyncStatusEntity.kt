@@ -15,11 +15,12 @@ import org.deiverbum.app.util.Constants
 @Entity(tableName = Constants.SYNC_STATUS)
 data class SyncStatusEntity (
     @PrimaryKey
-    @ColumnInfo(name = "tableName")
-    val tableName:String,
+    @ColumnInfo(name = "lastDate")
+    val lastDate: Int,
 
-    @ColumnInfo(name = "versionDB")
-    val versionDB:Int = 1,
+    @ColumnInfo(name = "version")
+    val version: Int = 1,
 
     @ColumnInfo(name = "lastUpdate", defaultValue = "CURRENT_TIMESTAMP")
-    val lastUpdate: String? = null)
+    val lastUpdate: String? = null
+)

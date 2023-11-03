@@ -29,7 +29,6 @@ data class LHInvitatoryAll(
 )
 
 fun LHInvitatoryAll.asExternalModel() = LHInvitatory(
-    mutableListOf(
-        psalm.asExternalModel()
-    ), mutableListOf(antiphon.asExternalModel())
+    mutableListOf(antiphon.asExternalModel()),
+    mutableListOf(psalm.asExternalModel())
 )

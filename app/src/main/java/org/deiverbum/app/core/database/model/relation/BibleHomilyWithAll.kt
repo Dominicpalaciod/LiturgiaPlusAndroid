@@ -6,6 +6,7 @@ import org.deiverbum.app.core.database.model.entity.BibleHomilyJoinEntity
 import org.deiverbum.app.core.database.model.entity.BibleHomilyThemeEntity
 import org.deiverbum.app.core.database.model.entity.HomilyEntity
 import org.deiverbum.app.core.model.data.BibleComment
+import org.deiverbum.app.core.model.data.Homily
 
 /**
  * @author A. Cedano
@@ -33,6 +34,15 @@ fun BibleHomilyWithAll.asExternalModel() = BibleComment(
     themeEntity.biblical!!,
     homilia.homilia.fecha,
     homilia.homilia.texto
+)
+
+fun BibleHomilyWithAll.asExternalModelNew() = Homily(
+    homilia.homilia.texto,
+    homilia.homilia.fecha,
+    homilia.paterOpusAll.asExternalModel(),
+    //themeEntity.reference!!,
+    //themeEntity.theological!!,
+    themeEntity.biblical!!,
 )
 
 
