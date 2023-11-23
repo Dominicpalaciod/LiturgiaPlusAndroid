@@ -59,7 +59,7 @@ data class LHNonamLocal(
 
 fun LHNonamLocal.asExternalModel() = Universalis(
     universalis.todayDate,
-    universalis.timeFK,
+    //universalis.timeFK,
     Liturgy(
         liturgia.parent.semana,
         liturgia.parent.dia,
@@ -71,7 +71,7 @@ fun LHNonamLocal.asExternalModel() = Universalis(
             lectioBrevis.asExternalModel(),
             oratio.asExternalModel(),
             5,
-            "intermedia"
+            "nonam"
         )
     )
 )

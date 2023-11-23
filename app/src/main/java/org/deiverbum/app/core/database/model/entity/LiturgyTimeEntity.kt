@@ -28,6 +28,6 @@ data class LiturgyTimeEntity(
 
 fun LiturgyTimeEntity.asExternalModel() = LiturgyTime(
     timeID = timeID,
-    timeName = timeName,
-    liturgyName = liturgyName
+    nomen = timeName,
+    externus = liturgyName
 )

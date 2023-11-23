@@ -27,7 +27,7 @@ fun SanctiLocal.asExternalModel(): Universalis {
     val alteri =
         Alteri.Sancti(
             saintLife.asExternalModel(saint.theMonth, saint.theDay, saint.theName),
-            "sancti"
+            "sanctii"
             //LiturgyTime()
         )
     //extModel.liturgia = Liturgy(alteri, saint.theName, 11)

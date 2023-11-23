@@ -58,7 +58,7 @@ fun MissaeLectionumLocal.asExternalModel(): Universalis {
     }
     return Universalis(
         universalis.todayDate,
-        universalis.timeFK,
+        //universalis.timeFK,
         Liturgy(
             liturgia.parent.semana,
             liturgia.parent.dia,

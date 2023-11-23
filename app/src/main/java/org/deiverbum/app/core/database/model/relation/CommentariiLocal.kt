@@ -75,7 +75,6 @@ fun CommentariiLocal.asExternalModel(): Universalis {
     )
     return Universalis(
         universalis.todayDate,
-        universalis.timeFK,
         Liturgy(
             liturgia.parent.semana,
             liturgia.parent.dia,

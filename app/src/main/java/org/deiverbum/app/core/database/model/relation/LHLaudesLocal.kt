@@ -80,7 +80,7 @@ data class LHLaudesLocal(
 
     @Relation(
         entity = LHGospelCanticleEntity::class,
-        parentColumn = "lBenedictusFK",
+        parentColumn = "lCanticumFK",
         entityColumn = "groupID"
     )
     var canticumEvangelicum: LHGospelCanticleWithAntiphon
@@ -104,7 +104,7 @@ fun LHLaudesLocal.asExternalModel(): Universalis {
     }
     return Universalis(
         universalis.todayDate,
-        universalis.timeFK,
+        //universalis.timeFK,
         Liturgy(
             liturgia.parent.semana,
             liturgia.parent.dia,

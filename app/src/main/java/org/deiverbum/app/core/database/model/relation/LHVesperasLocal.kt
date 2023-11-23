@@ -71,7 +71,7 @@ data class LHVesperasLocal(
 
     @Relation(
         entity = LHGospelCanticleEntity::class,
-        parentColumn = "vMagnificatFK",
+        parentColumn = "vCanticumFK",
         entityColumn = "groupID"
     )
     var canticumEvangelicum: LHGospelCanticleWithAntiphon
@@ -89,7 +89,7 @@ fun LHVesperasLocal.asExternalModel(): Universalis {
 
     return Universalis(
         universalis.todayDate,
-        universalis.timeFK,
+        //universalis.timeFK,
         Liturgy(
             liturgiaAssoc.parent.semana,
             liturgiaAssoc.parent.dia,

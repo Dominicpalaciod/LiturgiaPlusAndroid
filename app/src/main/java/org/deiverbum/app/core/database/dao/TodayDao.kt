@@ -103,6 +103,7 @@ import org.deiverbum.app.core.model.data.SyncStatus
 import org.deiverbum.app.core.model.data.Today
 import org.deiverbum.app.core.model.data.Universalis
 import org.deiverbum.app.core.model.data.VirginAntiphon
+import org.deiverbum.app.util.Constants
 
 
 @Dao
@@ -210,8 +211,8 @@ interface TodayDao {
     )
     fun syncInfo(): SyncStatus
 
-    @Query("DELETE FROM today WHERE  substr(todayDate,1,4)+0<:currentYear")
-    fun deleteLastYear(currentYear: Int): Int
+    @Query("DELETE FROM universalis WHERE  substr(todayDate,1,4)+0<=:pastYear")
+    fun deletePastYear(pastYear: Int): Int
 
     @Insert(entity = LiturgyEntity::class, onConflict = OnConflictStrategy.IGNORE)
     fun liturgyInsertAll(c: List<Liturgy>)
@@ -417,6 +418,29 @@ interface TodayDao {
 
     @Insert(entity = LHAntiphonJoinEntity::class, onConflict = OnConflictStrategy.IGNORE)
     fun lhAntiphonJoinInsertAll(c: List<LHAntiphonJoin>)
+
+
+    @Query("DELETE FROM ${Constants.LH_ANTIPHON_JOIN} WHERE groupFK=:groupFK AND antiphonFK=:antiphonFK AND theOrder=:theOrder")
+    fun deleteLHAntiphonJoin(groupFK: Int, antiphonFK: Int, theOrder: Int)
+
+    @Transaction
+    @Query("")
+    fun deleteLHAntiphonJoinAll(list: List<LHAntiphonJoin>) {
+        for (p in list) {
+            deleteLHAntiphonJoin(p.groupFK, p.antiphonFK, p.theOrder)
+        }
+    }
+
+    @Query("UPDATE ${Constants.LH_ANTIPHON_JOIN} SET groupFK=:groupFKNew, antiphonFK=:antiphonFKNew, theOrder=:theOrderNew WHERE groupFK=:groupFKOld AND antiphonFK=:antiphonFKOld AND theOrder=:theOrderOld")
+    fun updateLHAntiphonJoin(groupFKNew: Int, antiphonFKNew: Int, theOrderNew: Int)
+
+    @Transaction
+    @Query("")
+    fun updateLHAntiphonJoinAll(list: List<LHAntiphonJoin>) {
+        for (p in list) {
+            updateLHAntiphonJoin(p.groupFK, p.antiphonFK, p.theOrder)
+        }
+    }
 
     @Update(entity = LHAntiphonJoinEntity::class, onConflict = OnConflictStrategy.REPLACE)
     fun lhAntiphonJoinUpdateAll(u: List<LHAntiphonJoin>)

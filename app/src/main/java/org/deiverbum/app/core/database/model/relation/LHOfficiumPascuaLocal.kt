@@ -61,7 +61,7 @@ fun LocalOfficiumPascua.asExternalModel(): Universalis {
 
     return Universalis(
         universalis.todayDate,
-        universalis.timeFK,
+        //universalis.timeFK,
         Liturgy(
             1,
             1,

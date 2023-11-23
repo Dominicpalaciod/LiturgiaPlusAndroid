@@ -58,7 +58,7 @@ data class LHTertiamLocal(
 
 fun LHTertiamLocal.asExternalModel() = Universalis(
     universalis.todayDate,
-    universalis.timeFK,
+    //universalis.timeFK,
     Liturgy(
         liturgia.parent.semana,
         liturgia.parent.dia,

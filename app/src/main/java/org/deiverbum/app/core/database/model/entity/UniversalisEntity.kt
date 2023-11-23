@@ -19,7 +19,7 @@ import org.deiverbum.app.util.Constants
 @Entity(
     tableName = Constants.UNIVERSALIS_TABLE,
     indices = [Index(
-        value = ["todayDate", "timeFK", "liturgyFK", "previousFK", "massReadingFK", "invitatoryFK", "saintFK", "oHymnFK", "oAntiphonFK", "oPsalmFK", "oVerseFK", "oBiblicalFK", "oPatristicFK", "oPrayerFK", "oTeDeum", "lHymnFK", "lAntiphonFK", "lPsalmFK", "lBiblicalFK", "lBenedictusFK", "lIntercessionsFK", "lPrayerFK", "tHymnFK", "tAntiphonFK", "tPsalmFK", "tBiblicalFK", "tPrayerFK", "sHymnFK", "sAntiphonFK", "sPsalmFK", "sBiblicalFK", "sPrayerFK", "nHymnFK", "nAntiphonFK", "nPsalmFK", "nBiblicalFK", "nPrayerFK", "vHymnFK", "vAntiphonFK", "vPsalmFK", "vBiblicalFK", "vMagnificatFK", "vIntercessionsFK", "vPrayerFK", "nightPrayerFK"],
+        value = ["todayDate", "timeFK", "liturgyFK", "previousFK", "massReadingFK", "invitatoryFK", "saintFK", "oHymnFK", "oAntiphonFK", "oPsalmFK", "oVerseFK", "oBiblicalFK", "oPatristicFK", "oPrayerFK", "oTeDeum", "lHymnFK", "lAntiphonFK", "lPsalmFK", "lBiblicalFK", "lCanticumFK", "lIntercessionsFK", "lPrayerFK", "tHymnFK", "tAntiphonFK", "tPsalmFK", "tBiblicalFK", "tPrayerFK", "sHymnFK", "sAntiphonFK", "sPsalmFK", "sBiblicalFK", "sPrayerFK", "nHymnFK", "nAntiphonFK", "nPsalmFK", "nBiblicalFK", "nPrayerFK", "vHymnFK", "vAntiphonFK", "vPsalmFK", "vBiblicalFK", "vCanticumFK", "vIntercessionsFK", "vPrayerFK", "nightPrayerFK"],
         unique = true
     )],
     foreignKeys = [ForeignKey(
@@ -121,7 +121,7 @@ import org.deiverbum.app.util.Constants
     ), ForeignKey(
         entity = LHGospelCanticleEntity::class,
         parentColumns = arrayOf("groupID"),
-        childColumns = arrayOf("lBenedictusFK"),
+        childColumns = arrayOf("lCanticumFK"),
         onDelete = CASCADE,
         onUpdate = CASCADE
     ), ForeignKey(
@@ -253,7 +253,7 @@ import org.deiverbum.app.util.Constants
     ), ForeignKey(
         entity = LHGospelCanticleEntity::class,
         parentColumns = arrayOf("groupID"),
-        childColumns = arrayOf("vMagnificatFK"),
+        childColumns = arrayOf("vCanticumFK"),
         onDelete = CASCADE,
         onUpdate = CASCADE
     ), ForeignKey(
@@ -346,8 +346,8 @@ data class UniversalisEntity(
     @ColumnInfo(name = "lBiblicalFK", index = true)
     var lBiblicalFK: Int,
 
-    @ColumnInfo(name = "lBenedictusFK", index = true)
-    var lBenedictusFK: Int,
+    @ColumnInfo(name = "lCanticumFK", index = true)
+    var lCanticumFK: Int,
 
     @ColumnInfo(name = "lIntercessionsFK", index = true)
     var lIntercessionsFK: Int,
@@ -412,8 +412,8 @@ data class UniversalisEntity(
     @ColumnInfo(name = "vBiblicalFK", index = true)
     var vBiblicalFK: Int,
 
-    @ColumnInfo(name = "vMagnificatFK", index = true)
-    var vMagnificatFK: Int,
+    @ColumnInfo(name = "vCanticumFK", index = true)
+    var vCanticumFK: Int,
 
     @ColumnInfo(name = "vIntercessionsFK", index = true)
     var vIntercessionsFK: Int,
