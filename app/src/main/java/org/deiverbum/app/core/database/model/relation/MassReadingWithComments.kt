@@ -52,7 +52,7 @@ fun MassReadingWithComments.asExternalModel(): MutableList<BibleComment> {
     return extModel
 }
 
-fun MassReadingWithComments.asExternalModelNew(): BiblicaWithComments? {
+fun MassReadingWithComments.asExternalModelNew(): BiblicaWithComments {
     var extModel: BiblicaWithComments =
         BiblicaWithComments(lecturaOne.asExternalModelMissae(misaLectura.orden, misaLectura.tema))
 
@@ -82,7 +82,7 @@ fun MassReadingWithComments.asExternalModelNew(): BiblicaWithComments? {
             homiliae.add(item.asExternalModelNew())
         }*/
         //extModel!!.biblica=biblica
-        extModel!!.homiliae = homiliae
+        extModel.homiliae = homiliae
         //return BiblicaWithComments(biblica, homiliae)
     }
     return extModel

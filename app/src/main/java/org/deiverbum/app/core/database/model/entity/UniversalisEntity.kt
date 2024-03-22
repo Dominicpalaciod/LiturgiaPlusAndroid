@@ -14,7 +14,7 @@ import org.deiverbum.app.util.Constants
  *
  * @author A. Cedano
  * @version 1.0
- * @since 2023.1.3
+ * @since 2024.1
  */
 @Entity(
     tableName = Constants.UNIVERSALIS_TABLE,
@@ -429,7 +429,7 @@ data class UniversalisEntity(
  * Retorna un objeto [Universalis] sólo con los datos necesarios para la capa de datos externa.
  *
  * @author A. Cedano
- * @since 2023.1.3
+ * @since 2024.1
  */
 
 fun UniversalisEntity.asExternalModel() = Universalis(

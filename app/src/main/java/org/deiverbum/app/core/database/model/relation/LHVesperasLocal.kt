@@ -98,7 +98,11 @@ fun LHVesperasLocal.asExternalModel(): Universalis {
             LHVesperas(
                 universalis.hasSaint == 1,
                 hymnus.entity.asExternalModel(),
-                LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
+                LHPsalmody(
+                    psalmus.asExternalModel(),
+                    antiphonae.asExternalModel(),
+                    psalmus.join.theType
+                ),
                 lectioBrevis.asExternalModel(),
                 canticumEvangelicum.asExternalModel(6),
                 preces.entity.asExternalModel(),

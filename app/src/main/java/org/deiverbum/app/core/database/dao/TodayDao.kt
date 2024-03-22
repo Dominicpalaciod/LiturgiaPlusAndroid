@@ -49,7 +49,6 @@ import org.deiverbum.app.core.database.model.entity.PrayerEntity
 import org.deiverbum.app.core.database.model.entity.SaintEntity
 import org.deiverbum.app.core.database.model.entity.SaintLifeEntity
 import org.deiverbum.app.core.database.model.entity.SaintShortLifeEntity
-import org.deiverbum.app.core.database.model.entity.TodayEntity
 import org.deiverbum.app.core.database.model.entity.UniversalisEntity
 import org.deiverbum.app.core.database.model.entity.VirginAntiphonEntity
 import org.deiverbum.app.core.database.model.relation.*
@@ -100,9 +99,10 @@ import org.deiverbum.app.core.model.data.Sanctus
 import org.deiverbum.app.core.model.data.SanctusVita
 import org.deiverbum.app.core.model.data.SanctusVitaBrevis
 import org.deiverbum.app.core.model.data.SyncStatus
-import org.deiverbum.app.core.model.data.Today
 import org.deiverbum.app.core.model.data.Universalis
 import org.deiverbum.app.core.model.data.VirginAntiphon
+import org.deiverbum.app.core.model.data.crud.LHAntiphonJoinCrud
+import org.deiverbum.app.core.model.data.crud.LHPsalmJoinCrud
 import org.deiverbum.app.util.Constants
 
 
@@ -116,6 +116,7 @@ interface TodayDao {
     @Query("SELECT * from lh_hymn where hymnID=1")
     fun getHymById(): Flow<LHHymnEntity>
 
+    /*
     @Insert(entity = TodayEntity::class, onConflict = OnConflictStrategy.REPLACE)
     fun todayInsertAll(today: List<Today>): List<Long>
 
@@ -124,7 +125,7 @@ interface TodayDao {
 
     @Delete(entity = TodayEntity::class)
     fun todayDeleteAll(list: List<Today>)
-
+*/
     @Insert(entity = UniversalisEntity::class, onConflict = OnConflictStrategy.REPLACE)
     fun universalisInsertAll(today: List<Universalis>): List<Long>
 
@@ -425,20 +426,97 @@ interface TodayDao {
 
     @Transaction
     @Query("")
-    fun deleteLHAntiphonJoinAll(list: List<LHAntiphonJoin>) {
+    fun deleteLHAntiphonJoinAll(list: List<LHAntiphonJoinCrud>) {
         for (p in list) {
-            deleteLHAntiphonJoin(p.groupFK, p.antiphonFK, p.theOrder)
+            deleteLHAntiphonJoin(p.groupFKOld, p.antiphonFKOld, p.theOrderOld)
         }
     }
 
     @Query("UPDATE ${Constants.LH_ANTIPHON_JOIN} SET groupFK=:groupFKNew, antiphonFK=:antiphonFKNew, theOrder=:theOrderNew WHERE groupFK=:groupFKOld AND antiphonFK=:antiphonFKOld AND theOrder=:theOrderOld")
-    fun updateLHAntiphonJoin(groupFKNew: Int, antiphonFKNew: Int, theOrderNew: Int)
+    fun updateLHAntiphonJoin(
+        groupFKNew: Int,
+        antiphonFKNew: Int,
+        theOrderNew: Int,
+        groupFKOld: Int,
+        antiphonFKOld: Int,
+        theOrderOld: Int
+    )
 
     @Transaction
     @Query("")
-    fun updateLHAntiphonJoinAll(list: List<LHAntiphonJoin>) {
+    fun updateLHAntiphonJoinAll(list: List<LHAntiphonJoinCrud>) {
         for (p in list) {
-            updateLHAntiphonJoin(p.groupFK, p.antiphonFK, p.theOrder)
+            updateLHAntiphonJoin(
+                p.groupFKNew,
+                p.antiphonFKNew,
+                p.theOrderNew,
+                p.groupFKOld,
+                p.antiphonFKOld,
+                p.theOrderOld
+            )
+        }
+    }
+
+
+    @Query(
+        "UPDATE ${Constants.LH_PSALM_JOIN} SET groupFK=:groupFKNew, readingFK=:readingFKNew, theOrder=:theOrderNew, themeFK=:themeFKNew, epigraphFK=:epigraphFKNew,thePart=:thePartNew " +
+                "WHERE groupFK=:groupFKOld AND readingFK=:readingFKOld AND theOrder=:theOrderOld"
+    )
+    fun updateLHPsalmJoin(
+        groupFKNew: Int,
+        readingFKNew: Int,
+        theOrderNew: Int,
+        themeFKNew: Int?,
+        epigraphFKNew: Int?,
+        thePartNew: Int?,
+        groupFKOld: Int,
+        readingFKOld: Int,
+        theOrderOld: Int
+    )
+
+    @Transaction
+    @Query("")
+    fun updateLHPsalmJoinAll(list: List<LHPsalmJoinCrud>) {
+        for (p in list) {
+            updateLHPsalmJoin(
+                p.groupFKNew,
+                p.readingFKNew,
+                p.theOrderNew,
+                p.themeFKNew,
+                p.epigraphFKNew,
+                p.thePartNew,
+                p.groupFKOld,
+                p.readingFKOld,
+                p.theOrderOld
+            )
+        }
+    }
+
+    @Query(
+        "DELETE FROM ${Constants.LH_PSALM_JOIN}  " +
+                "WHERE groupFK=:groupFKOld AND readingFK=:readingFKOld AND theOrder=:theOrderOld AND themeFK=:themeFKOld AND epigraphFK=:epigraphFKOld AND thePart=:thePartOld"
+    )
+    fun deleteLHPsalmJoin(
+        groupFKOld: Int,
+        readingFKOld: Int,
+        theOrderOld: Int,
+        themeFKOld: Int,
+        epigraphFKOld: Int,
+        thePartOld: Int
+    )
+
+    @Transaction
+    @Query("")
+    fun deleteLHPsalmJoinAll(list: List<LHPsalmJoinCrud>) {
+        for (p in list) {
+            deleteLHPsalmJoin(
+                p.groupFKOld,
+                p.readingFKOld,
+                p.theOrderOld,
+                p.themeFKOld!!,
+                p.epigraphFKOld!!,
+                p.thePartOld!!
+            )
         }
     }
 

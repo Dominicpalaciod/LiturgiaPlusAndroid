@@ -20,7 +20,7 @@ import org.deiverbum.app.core.model.data.Universalis
 
 /**
  * @author A. Cedano
- * @version 2023.1.3
+ * @version 2024.1
  * @since 2023.1
  */
 data class LHLaudesLocal(
@@ -92,7 +92,7 @@ fun LHLaudesLocal.asExternalModel(): Universalis {
         universalis.hasSaint == 1,
         invitatorium.asExternalModel(),
         hymnus.entity.asExternalModel(),
-        LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
+        LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel(), psalmus.join.theType),
         lectioBrevis.asExternalModel(),
         canticumEvangelicum.asExternalModel(2),
         preces.entity.asExternalModel(),

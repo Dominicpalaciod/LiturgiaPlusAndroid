@@ -80,5 +80,5 @@ fun LHNightPrayerAssoc.asExternalModelPsalmodia(): LHPsalmody {
     for (ps in psalmus) {
         lstPsalmus.add(ps.asExternalModel())
     }
-    return LHPsalmody(lstPsalmus, lstAntiphonae)
+    return LHPsalmody(lstPsalmus, lstAntiphonae, 0)
 }

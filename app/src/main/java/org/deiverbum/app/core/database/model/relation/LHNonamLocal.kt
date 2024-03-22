@@ -67,7 +67,11 @@ fun LHNonamLocal.asExternalModel() = Universalis(
         liturgia.entity.asExternalModel(),
         LHIntermedia(
             hymnus.entity.asExternalModel(),
-            LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
+            LHPsalmody(
+                psalmus.asExternalModel(),
+                antiphonae.asExternalModel(),
+                psalmus.join.theType
+            ),
             lectioBrevis.asExternalModel(),
             oratio.asExternalModel(),
             5,

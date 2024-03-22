@@ -134,7 +134,7 @@ fun LHMixtusLocal.asExternalModel(): Universalis {
         universalis.hasSaint == 1,
         invitatorium.asExternalModel(),
         hymnus.entity.asExternalModel(),
-        LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel()),
+        LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel(), psalmus.join.theType),
         lectioBrevis.asExternalModel(),
         LHOfficiumLectionis(
             lectioPrima.asExternalModel(),

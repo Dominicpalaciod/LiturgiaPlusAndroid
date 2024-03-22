@@ -8,7 +8,7 @@ import org.deiverbum.app.core.database.model.entity.LHKyrieJoinEntity
 /**
  * @author A. Cedano
  * @version 1.0
- * @since 2023.1.3
+ * @since 2024.1
  */
 data class KyrieWithAll(
     @Embedded

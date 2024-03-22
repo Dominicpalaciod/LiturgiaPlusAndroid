@@ -11,7 +11,7 @@ import org.deiverbum.app.util.Constants
  *
  * @author A. Cedano
  * @version 1.0
- * @since 2023.1.3
+ * @since 2024.1
  */
 @Entity(tableName = Constants.KYRIE)
 data class KyrieEntity(

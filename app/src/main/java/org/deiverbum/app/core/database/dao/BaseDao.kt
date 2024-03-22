@@ -8,7 +8,7 @@ import androidx.room.Update
  * Interfaz base para insertar, actualizar o borrar registros de cualquier tabla.
  *
  * @author A. Cedano
- * @since 2023.1.3
+ * @since 2024.1
  *
  * @param [T] la instancia del objeto con cuyos datos se va a operar.
  */

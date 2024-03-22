@@ -19,7 +19,7 @@ import org.deiverbum.app.util.Constants.PASCUA_TIMEID
 /**
  * @author A. Cedano
  * @version 2.0
- * @since 2023.1.3
+ * @since 2024.1
  */
 data class LocalOfficiumPascua(
     @Embedded
@@ -68,7 +68,7 @@ fun LocalOfficiumPascua.asExternalModel(): Universalis {
             "Domingo de Pascua de la Resurrección del Señor",
             LiturgyTime(PASCUA_TIMEID, "Tiempo de Pascua", "Tiempo de Pascua"),
             LHOfficiumPascua(
-                LHPsalmody(lstPsalmus, lstAntiphonae),
+                LHPsalmody(lstPsalmus, lstAntiphonae, 0),
                 lstLectio,
                 lstOratio,
                 "officiumpascua"

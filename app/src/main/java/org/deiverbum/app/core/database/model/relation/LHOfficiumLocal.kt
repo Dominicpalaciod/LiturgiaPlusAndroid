@@ -94,7 +94,8 @@ fun LHOfficiumLocal.asExternalModel(): Universalis {
         extModel.oBiblicalFK = universalis.oBiblicalFK
         return extModel
     }
-    val psalmodia = LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel())
+    val psalmodia =
+        LHPsalmody(psalmus.asExternalModel(), antiphonae.asExternalModel(), psalmus.join.theType)
     val breviarium = LHOfficium(
         universalis.hasSaint == 1,
         invitatorio.asExternalModel(),
