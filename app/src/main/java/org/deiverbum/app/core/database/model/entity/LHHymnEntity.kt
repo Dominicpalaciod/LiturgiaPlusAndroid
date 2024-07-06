@@ -24,5 +24,7 @@ data class LHHymnEntity(
 )
 
 fun LHHymnEntity.asExternalModel() = LHHymn(
+    //hymnID = hymnID,
     hymnus = hymn
 )
+

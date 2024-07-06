@@ -1,14 +1,10 @@
 package org.deiverbum.app.core.database
 
-import android.app.Application
-import androidx.room.Room.databaseBuilder
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.deiverbum.app.core.database.dao.TodayDao
-import org.deiverbum.app.util.Configuration.DATABASE_PATH
 import javax.inject.Singleton
 
 /**
@@ -19,6 +15,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
+    /*
     @Provides
     @Singleton
     fun provideDatabase(application: Application?): AppDatabase {
@@ -40,7 +37,7 @@ object DatabaseModule {
     fun provideTodayDao(appDB: AppDatabase): TodayDao {
         return appDB.todayDao()
     }
-
+*/
     @Provides
     @Singleton
     fun provideMoshi(): Moshi {
