@@ -16,6 +16,7 @@
 
 package org.deiverbum.app.core.database.nia
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -25,6 +26,7 @@ import org.deiverbum.app.core.database.dao.nia.NewsResourceFtsDao
 import org.deiverbum.app.core.database.dao.nia.RecentSearchQueryDao
 import org.deiverbum.app.core.database.dao.nia.TopicDao
 import org.deiverbum.app.core.database.dao.nia.TopicFtsDao
+import org.deiverbum.app.core.database.dao.nia.UniversalisDao
 import org.deiverbum.app.core.database.model.entity.BibleBookEntity
 import org.deiverbum.app.core.database.model.entity.BibleHomilyJoinEntity
 import org.deiverbum.app.core.database.model.entity.BibleHomilyThemeEntity
@@ -101,24 +103,25 @@ import org.deiverbum.app.core.database.util.InstantConverter
 
     ],
     version = 2,
-    /*autoMigrations = [
+    autoMigrations = [
         AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3, spec = DatabaseMigrations.Schema2to3::class),
-        AutoMigration(from = 3, to = 4),
-        AutoMigration(from = 4, to = 5),
-        AutoMigration(from = 5, to = 6),
-        AutoMigration(from = 6, to = 7),
-        AutoMigration(from = 7, to = 8),
-        AutoMigration(from = 8, to = 9),
-        AutoMigration(from = 9, to = 10),
-        AutoMigration(from = 10, to = 11, spec = DatabaseMigrations.Schema10to11::class),
-        AutoMigration(from = 11, to = 12, spec = DatabaseMigrations.Schema11to12::class),
-        AutoMigration(from = 12, to = 13),
-        AutoMigration(from = 13, to = 14),
-        AutoMigration(from = 14, to = 15),
+        /*
+                AutoMigration(from = 2, to = 3, spec = DatabaseMigrations.Schema2to3::class),
+                AutoMigration(from = 3, to = 4),
+                AutoMigration(from = 4, to = 5),
+                AutoMigration(from = 5, to = 6),
+                AutoMigration(from = 6, to = 7),
+                AutoMigration(from = 7, to = 8),
+                AutoMigration(from = 8, to = 9),
+                AutoMigration(from = 9, to = 10),
+                AutoMigration(from = 10, to = 11, spec = DatabaseMigrations.Schema10to11::class),
+                AutoMigration(from = 11, to = 12, spec = DatabaseMigrations.Schema11to12::class),
+                AutoMigration(from = 12, to = 13),
+                AutoMigration(from = 13, to = 14),
+                AutoMigration(from = 14, to = 15),*/
 
     ],
-    exportSchema = true,*/
+    exportSchema = true,
 )
 @TypeConverters(
     InstantConverter::class,
@@ -128,6 +131,8 @@ internal abstract class NiaDatabase : RoomDatabase() {
     abstract fun todayDao(): TodayDao
 
     abstract fun newsResourceDao(): NewsResourceDao
+    abstract fun universalisDao(): UniversalisDao
+
     abstract fun topicFtsDao(): TopicFtsDao
     abstract fun newsResourceFtsDao(): NewsResourceFtsDao
     abstract fun recentSearchQueryDao(): RecentSearchQueryDao

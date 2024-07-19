@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import org.deiverbum.app.core.database.dao.TodayDao
+import org.deiverbum.app.core.database.dao.nia.UniversalisDao
 import org.deiverbum.app.core.database.model.entity.BibleBookEntity
 import org.deiverbum.app.core.database.model.entity.BibleHomilyJoinEntity
 import org.deiverbum.app.core.database.model.entity.BibleHomilyThemeEntity
@@ -76,5 +77,7 @@ import org.deiverbum.app.core.database.util.RoomConverter
 @TypeConverters(RoomConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun todayDao(): TodayDao
+    abstract fun universalisDaoo(): UniversalisDao
+
 }
 
