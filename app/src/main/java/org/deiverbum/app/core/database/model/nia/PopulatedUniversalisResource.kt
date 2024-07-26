@@ -95,8 +95,9 @@ data class PopulatedUniversalisResource(
 )
 
 fun PopulatedUniversalisResource.asExternalModel() = UniversalisResource(
-    universalis.todayDate,
-    "",
+    //universalis.todayDate,
+    //"",
+    data =
     listOf(
         Universalis(
             universalis.todayDate,

@@ -25,6 +25,7 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 import org.deiverbum.app.core.database.model.entity.UniversalisEntity
 import org.deiverbum.app.core.database.model.nia.NewsResourceEntity
+import org.deiverbum.app.core.database.model.nia.PopulatedOfficiumResource
 import org.deiverbum.app.core.database.model.nia.PopulatedUniversalisResource
 
 /**
@@ -34,7 +35,7 @@ import org.deiverbum.app.core.database.model.nia.PopulatedUniversalisResource
 interface UniversalisDao {
 
 
-    @Query(value = "SELECT * FROM universalis")
+    @Query(value = "SELECT * FROM universalis WHERE todayDate=20240719")
     fun getUniversalisList(): Flow<List<UniversalisEntity>>
 
     /**
@@ -54,10 +55,35 @@ interface UniversalisDao {
         useFilterNewsIds: Boolean = false,
         filterNewsIds: Set<String> = emptySet(),*/
         //todayDate: Int = 0
-        filterTopicIds: Set<String> = emptySet(),
+        filterTopicIds: Set<Int> = emptySet(),
 
         //): Flow<UniversalisEntity>
     ): Flow<List<PopulatedUniversalisResource>>
+    //): Flow<List<PopulatedUniversalisResource>>
+
+
+    /**
+     * Fetches news resources that match the query parameters
+     */
+    @Transaction
+    @Query(
+        value = """
+            SELECT * FROM universalis
+            WHERE 
+                todayDate IN(:filterTopicIds)
+    """,
+    )
+    fun getOfficiumByDate(
+        /*useFilterTopicIds: Boolean = false,
+        filterTopicIds: Set<String> = emptySet(),
+        useFilterNewsIds: Boolean = false,
+        filterNewsIds: Set<String> = emptySet(),*/
+        //todayDate: Int = 0
+        filterTopicIds: Set<Int> = emptySet(),
+
+        //): Flow<UniversalisEntity>
+    ): Flow<List<PopulatedOfficiumResource>>
+    //): Flow<List<PopulatedUniversalisResource>>
 
     /**
      * Fetches news resources that match the query parameters

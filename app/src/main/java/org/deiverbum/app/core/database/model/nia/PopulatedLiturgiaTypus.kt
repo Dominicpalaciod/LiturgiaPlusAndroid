@@ -1,10 +1,12 @@
-package org.deiverbum.app.core.model.data
+package org.deiverbum.app.core.database.model.nia
 
 import android.text.SpannableStringBuilder
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
+import org.deiverbum.app.core.model.data.UniversalisResource
+import org.deiverbum.app.core.model.data.UserDataDynamic
 
 /**
  *
@@ -19,8 +21,7 @@ import androidx.compose.ui.text.buildAnnotatedString
  *
  */
 
-abstract class LiturgiaTypus
-    (open val typus: String) {
+interface PopulatedLiturgiaTypus {
     open fun getHeaders(): SpannableStringBuilder {
         return SpannableStringBuilder()
     }
@@ -40,25 +41,5 @@ abstract class LiturgiaTypus
         return StringBuilder("")
     }
 
+    open fun PopulatedLiturgiaTypus.asExternalModel() = UniversalisResource(emptyList())
 }
-
-/*
-sealed interface LiturgiaTypus {
-    var typus:String
-    var tempore:LiturgyTime
-
-    fun forView(calendarTime: Int, hasSaint: Boolean): SpannableStringBuilder {
-        return SpannableStringBuilder("")
-    }
-
-    fun forRead(): StringBuilder {
-        return StringBuilder("")
-    }
-/*
-    object Unknown : LiturgiaTypus {
-        override var typus: String
-            get() = ""
-            set(value) {}
-    }*/
-
-}*/

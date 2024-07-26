@@ -1,10 +1,12 @@
-package org.deiverbum.app.core.model.data
+package org.deiverbum.app.core.database.model.nia
 
 import android.text.SpannableStringBuilder
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
+import org.deiverbum.app.core.model.data.LiturgiaTypus
+import org.deiverbum.app.core.model.data.UserDataDynamic
 
 /**
  *
@@ -25,8 +27,8 @@ import androidx.compose.ui.text.buildAnnotatedString
  */
 
 
-abstract class Breviarium(typus: String) :
-    LiturgiaTypus(typus) {
+abstract class PopulatedBreviarium(typus: String) :
+    PopulatedLiturgiaTypus {
     fun forView(): SpannableStringBuilder {
         return super.getHeaders()
     }
