@@ -25,15 +25,23 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 import org.deiverbum.app.core.database.model.entity.UniversalisEntity
 import org.deiverbum.app.core.database.model.nia.NewsResourceEntity
+import org.deiverbum.app.core.database.model.nia.PopulatedCompletoriumResource
+import org.deiverbum.app.core.database.model.nia.PopulatedLaudesResource
+import org.deiverbum.app.core.database.model.nia.PopulatedMixtusResource
+import org.deiverbum.app.core.database.model.nia.PopulatedNonamResource
 import org.deiverbum.app.core.database.model.nia.PopulatedOfficiumResource
-import org.deiverbum.app.core.database.model.nia.PopulatedUniversalisResource
+import org.deiverbum.app.core.database.model.nia.PopulatedSextamResource
+import org.deiverbum.app.core.database.model.nia.PopulatedTertiamResource
+import org.deiverbum.app.core.database.model.nia.PopulatedVesperasResource
 
 /**
  * DAO for [NewsResource] and [NewsResourceEntity] access
  */
 @Dao
 interface UniversalisDao {
-
+    companion object {
+        const val universalisByDate = "SELECT * FROM universalis WHERE todayDate IN(:filterDates)"
+    }
 
     @Query(value = "SELECT * FROM universalis WHERE todayDate=20240719")
     fun getUniversalisList(): Flow<List<UniversalisEntity>>
@@ -42,48 +50,62 @@ interface UniversalisDao {
      * Fetches news resources that match the query parameters
      */
     @Transaction
-    @Query(
-        value = """
-            SELECT * FROM universalis
-            WHERE 
-                todayDate IN(:filterTopicIds)
-    """,
-    )
+    @Query(universalisByDate)
     fun getUniversalisByDate(
-        /*useFilterTopicIds: Boolean = false,
-        filterTopicIds: Set<String> = emptySet(),
-        useFilterNewsIds: Boolean = false,
-        filterNewsIds: Set<String> = emptySet(),*/
-        //todayDate: Int = 0
-        filterTopicIds: Set<Int> = emptySet(),
-
-        //): Flow<UniversalisEntity>
-    ): Flow<List<PopulatedUniversalisResource>>
-    //): Flow<List<PopulatedUniversalisResource>>
-
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<PopulatedSextamResource>>
 
     /**
      * Fetches news resources that match the query parameters
      */
-    @Transaction
-    @Query(
-        value = """
-            SELECT * FROM universalis
-            WHERE 
-                todayDate IN(:filterTopicIds)
-    """,
-    )
-    fun getOfficiumByDate(
-        /*useFilterTopicIds: Boolean = false,
-        filterTopicIds: Set<String> = emptySet(),
-        useFilterNewsIds: Boolean = false,
-        filterNewsIds: Set<String> = emptySet(),*/
-        //todayDate: Int = 0
-        filterTopicIds: Set<Int> = emptySet(),
 
-        //): Flow<UniversalisEntity>
+    @Transaction
+    @Query(universalisByDate)
+    fun getMixtusByDate(
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<PopulatedMixtusResource>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getOfficiumByDate(
+        filterDates: Set<Int> = emptySet(),
     ): Flow<List<PopulatedOfficiumResource>>
-    //): Flow<List<PopulatedUniversalisResource>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getLaudesByDate(
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<PopulatedLaudesResource>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getTertiamByDate(
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<PopulatedTertiamResource>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getSextamByDate(
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<PopulatedSextamResource>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getNonamByDate(
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<PopulatedNonamResource>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getVesperasByDate(
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<PopulatedVesperasResource>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getCompletoriumByDate(
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<PopulatedCompletoriumResource>>
 
     /**
      * Fetches news resources that match the query parameters
@@ -97,15 +119,8 @@ interface UniversalisDao {
     """,
     )
     fun getUniversalisPopulatedByDate(
-        /*useFilterTopicIds: Boolean = false,
-        filterTopicIds: Set<String> = emptySet(),
-        useFilterNewsIds: Boolean = false,
-        filterNewsIds: Set<String> = emptySet(),*/
-        //todayDate: Int = 0
         todayDate: Int = 0,
-
-        //): Flow<UniversalisEntity>
-    ): Flow<PopulatedUniversalisResource>
+    ): Flow<PopulatedSextamResource>
 
     @Transaction
     @Query(

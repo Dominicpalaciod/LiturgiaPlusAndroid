@@ -41,25 +41,7 @@ import org.deiverbum.app.core.model.data.UniversalisResource
 /**
  * External data layer representation of a fully populated NiA news resource
  */
-data class PopulatedUniversalisResource(
-    /*
-    @Embedded
-    val entity: UniversalisEntity,
-    @Relation(entity = LiturgyEntity::class, parentColumn = "liturgyFK", entityColumn = "liturgyID")
-    var liturgia: LiturgyTimeAssoc,
-    @Relation(entity = LHHymnJoinEntity::class, parentColumn = "sHymnFK", entityColumn = "groupID")
-    var hymnus: LHHymnAssoc,
-    /*@Relation(
-        parentColumn = "oHymnFK",
-        entityColumn = "hymnID",
-        associateBy = Junction(
-            value = UniversalisHimnusCrossRef::class,
-            parentColumn = "hymnID",
-            entityColumn = "hymnFK",
-        ),
-    )*/
-//    val topics: UniversalisEntity,
-)*/
+data class PopulatedSextamResource(
     @Embedded
     var universalis: UniversalisEntity,
 
@@ -94,14 +76,11 @@ data class PopulatedUniversalisResource(
     var oratio: LHPrayerAll,
 )
 
-fun PopulatedUniversalisResource.asExternalModel() = UniversalisResource(
-    //universalis.todayDate,
-    //"",
+fun PopulatedSextamResource.asExternalModel() = UniversalisResource(
     data =
     listOf(
         Universalis(
             universalis.todayDate,
-            //universalis.timeFK,
             Liturgy(
                 liturgia.parent.semana,
                 liturgia.parent.dia,
@@ -123,47 +102,3 @@ fun PopulatedUniversalisResource.asExternalModel() = UniversalisResource(
         )
     )
 )
-
-fun PopulatedUniversalisResource.asExternalModelk() = Universalis(
-    universalis.todayDate,
-    //universalis.timeFK,
-    Liturgy(
-        liturgia.parent.semana,
-        liturgia.parent.dia,
-        liturgia.parent.nombre,
-        liturgia.entity.asExternalModel(),
-        LHIntermedia(
-            hymnus.entity.asExternalModel(),
-            LHPsalmody(
-                psalmus.asExternalModel(),
-                antiphonae.asExternalModel(),
-                psalmus.join.theType
-            ),
-            lectioBrevis.asExternalModel(),
-            oratio.asExternalModel(),
-            4,
-            "intermedia"
-        )
-    )
-)
-
-/*
-fun PopulatedUniversalisResourcee.asExternalModel() = UniversalisResource(
-    todayDate = entity.todayDate,
-    //content = liturgia.parent.nombre,
-    content = hymnus.entity.asExternalModel().all.toString(),
-
-    /*title = entity.title,
-    content = entity.content,
-    url = entity.url,
-    headerImageUrl = entity.headerImageUrl,
-    publishDate = entity.publishDate,
-    type = entity.type,*/
-    topics = emptyList(),
-)
-*/
-/*fun PopulatedUniversalisResource.asFtsEntity() = NewsResourceFtsEntity(
-    newsResourceId = entity.id,
-    title = entity.title,
-    content = entity.content,
-)*/
