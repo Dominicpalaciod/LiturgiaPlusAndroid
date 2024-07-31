@@ -18,6 +18,7 @@ import org.deiverbum.app.core.model.data.Universalis
  * @version 1.0
  * @since 2023.1
  */
+@Deprecated("Desde 2024.1.", ReplaceWith("MissaeLectionumExternal"))
 data class MissaeLectionumLocal(
     @Embedded
     var universalis: UniversalisEntity,

@@ -23,16 +23,20 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
+import org.deiverbum.app.core.database.model.UITopicEntity
 import org.deiverbum.app.core.database.model.entity.UniversalisEntity
+import org.deiverbum.app.core.database.model.external.MissaeLectionumExternal
+import org.deiverbum.app.core.database.model.external.CompletoriumExternal
+import org.deiverbum.app.core.database.model.external.LaudesExternal
+import org.deiverbum.app.core.database.model.external.MixtusExternal
+import org.deiverbum.app.core.database.model.external.NonamExternal
+import org.deiverbum.app.core.database.model.external.OfficiumExternal
+import org.deiverbum.app.core.database.model.external.SextamExternal
+import org.deiverbum.app.core.database.model.external.TertiamExternal
+import org.deiverbum.app.core.database.model.external.UniversalisExternal
+import org.deiverbum.app.core.database.model.external.PopulatedVesperasResource
 import org.deiverbum.app.core.database.model.nia.NewsResourceEntity
-import org.deiverbum.app.core.database.model.nia.PopulatedCompletoriumResource
-import org.deiverbum.app.core.database.model.nia.PopulatedLaudesResource
-import org.deiverbum.app.core.database.model.nia.PopulatedMixtusResource
-import org.deiverbum.app.core.database.model.nia.PopulatedNonamResource
-import org.deiverbum.app.core.database.model.nia.PopulatedOfficiumResource
-import org.deiverbum.app.core.database.model.nia.PopulatedSextamResource
-import org.deiverbum.app.core.database.model.nia.PopulatedTertiamResource
-import org.deiverbum.app.core.database.model.nia.PopulatedVesperasResource
+import org.deiverbum.app.core.model.data.Universalis
 
 /**
  * DAO for [NewsResource] and [NewsResourceEntity] access
@@ -46,6 +50,16 @@ interface UniversalisDao {
     @Query(value = "SELECT * FROM universalis WHERE todayDate=20240719")
     fun getUniversalisList(): Flow<List<UniversalisEntity>>
 
+    @Query(value = "SELECT * FROM ui_topic")
+    fun getTopicEntities(): Flow<List<UITopicEntity>>
+
+    @Query(
+        value = """
+        SELECT * FROM ui_topic
+        WHERE id = :id
+    """,
+    )
+    fun getTopicEntityy(id: Int): Flow<UITopicEntity>
     /**
      * Fetches news resources that match the query parameters
      */
@@ -53,7 +67,13 @@ interface UniversalisDao {
     @Query(universalisByDate)
     fun getUniversalisByDate(
         filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedSextamResource>>
+    ): Flow<List<UniversalisExternal>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getUniversalisOfToday(
+        filterDates: Set<Int> = emptySet(),
+    ): Flow<List<UniversalisExternal>>
 
     /**
      * Fetches news resources that match the query parameters
@@ -63,49 +83,50 @@ interface UniversalisDao {
     @Query(universalisByDate)
     fun getMixtusByDate(
         filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedMixtusResource>>
+    ): Flow<List<MixtusExternal>>
 
     @Transaction
     @Query(universalisByDate)
     fun getOfficiumByDate(
         filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedOfficiumResource>>
+    ): Flow<List<OfficiumExternal>>
 
     @Transaction
     @Query(universalisByDate)
     fun getLaudesByDate(
         filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedLaudesResource>>
+    ): Flow<List<LaudesExternal>>
 
     @Transaction
     @Query(universalisByDate)
     fun getTertiamByDate(
         filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedTertiamResource>>
+    ): Flow<List<TertiamExternal>>
 
     @Transaction
     @Query(universalisByDate)
     fun getSextamByDate(
         filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedSextamResource>>
+    ): Flow<List<SextamExternal>>
 
     @Transaction
     @Query(universalisByDate)
     fun getNonamByDate(
         filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedNonamResource>>
+    ): Flow<List<NonamExternal>>
 
     @Transaction
     @Query(universalisByDate)
-    fun getVesperasByDate(
-        filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedVesperasResource>>
+    fun getVesperasByDate(filterDates: Set<Int> = emptySet()): Flow<List<PopulatedVesperasResource>>
 
     @Transaction
     @Query(universalisByDate)
-    fun getCompletoriumByDate(
-        filterDates: Set<Int> = emptySet(),
-    ): Flow<List<PopulatedCompletoriumResource>>
+    fun getCompletoriumByDate(filterDates: Set<Int> = emptySet()): Flow<List<CompletoriumExternal>>
+
+    @Transaction
+    @Query(universalisByDate)
+    fun getMissaeLectionumByDate(filterDates: Set<Int> = emptySet()): Flow<List<MissaeLectionumExternal>>
+
 
     /**
      * Fetches news resources that match the query parameters
@@ -120,7 +141,7 @@ interface UniversalisDao {
     )
     fun getUniversalisPopulatedByDate(
         todayDate: Int = 0,
-    ): Flow<PopulatedSextamResource>
+    ): Flow<SextamExternal>
 
     @Transaction
     @Query(
@@ -154,6 +175,9 @@ interface UniversalisDao {
      */
     @Upsert
     suspend fun upsertUniversalis(entities: List<UniversalisEntity>)
+
+    @Upsert(entity = UniversalisEntity::class)
+    suspend fun upsertUniversaliss(entities: List<Universalis>)
 
     /**
      * Deletes rows in the db matching the specified [ids]

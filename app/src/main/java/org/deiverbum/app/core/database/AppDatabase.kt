@@ -5,6 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import org.deiverbum.app.core.database.dao.TodayDao
 import org.deiverbum.app.core.database.dao.nia.UniversalisDao
+import org.deiverbum.app.core.database.model.UIGroupEntity
+import org.deiverbum.app.core.database.model.UITopicEntity
 import org.deiverbum.app.core.database.model.entity.BibleBookEntity
 import org.deiverbum.app.core.database.model.entity.BibleHomilyJoinEntity
 import org.deiverbum.app.core.database.model.entity.BibleHomilyThemeEntity
@@ -70,7 +72,8 @@ import org.deiverbum.app.core.database.util.RoomConverter
 @Database(
     entities = [
         LHEasterBiblicalJoinEntity::class, LHEasterBiblicalEntity::class, UniversalisEntity::class, LiturgyEntity::class, LiturgyTimeEntity::class, LiturgySaintJoinEntity::class, SaintEntity::class, SaintLifeEntity::class, SaintShortLifeEntity::class, LHInvitatoryEntity::class, LHInvitatoryJoinEntity::class, LHHymnEntity::class, LHHymnJoinEntity::class, LHPsalmodyJoinEntity::class, LHPsalmJoinEntity::class, LHPsalmEntity::class, LHAntiphonJoinEntity::class, LHAntiphonEntity::class, LHThemeEntity::class, EpigraphEntity::class, LHOfficeVerseEntity::class, LHOfficeVerseJoinEntity::class, LHOfficeBiblicalJoinEntity::class, LHOfficeBiblicalEntity::class, LHOfficePatristicEntity::class, LHOfficePatristicJoinEntity::class, HomilyEntity::class, PaterEntity::class, PaterOpusEntity::class, LHResponsoryEntity::class, LHResponsoryShortEntity::class, BibleBookEntity::class, BibleReadingEntity::class, LHReadingShortEntity::class, LHReadingShortJoinEntity::class, LHGospelCanticleEntity::class, LHIntercessionsEntity::class, LHIntercessionsJoinEntity::class, PrayerEntity::class, LHPrayerEntity::class, LiturgyHomilyJoinEntity::class, BibleHomilyJoinEntity::class, BibleHomilyThemeEntity::class, LiturgyGroupEntity::class, LiturgyColorEntity::class, MassReadingEntity::class, MassReadingJoinEntity::class, SyncStatusEntity::class, DBTableEntity::class,
-        KyrieEntity::class, LHKyrieJoinEntity::class, VirginAntiphonEntity::class, LHVirginAntiphonJoinEntity::class, LHNightPrayerEntity::class
+        KyrieEntity::class, LHKyrieJoinEntity::class, VirginAntiphonEntity::class, LHVirginAntiphonJoinEntity::class, LHNightPrayerEntity::class,
+        UITopicEntity::class, UIGroupEntity::class
     ],
     version = 2
 )

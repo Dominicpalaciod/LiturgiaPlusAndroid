@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.deiverbum.app.core.data.repository.UserDataRepository
-import org.deiverbum.app.core.model.data.FollowableTopic
-import org.deiverbum.app.domain.GetFollowableTopicsUseCase
-import org.deiverbum.app.domain.TopicSortField
+import org.deiverbum.app.core.domain.GetHomeTopicsUseCase
+import org.deiverbum.app.core.domain.HomeSortField
+import org.deiverbum.app.core.model.data.FollowableUITopic
 import org.deiverbum.app.feature.interests.navigation.TOPIC_ID_ARG
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class InterestsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     val userDataRepository: UserDataRepository,
-    getFollowableTopics: GetFollowableTopicsUseCase,
+    getFollowableTopics: GetHomeTopicsUseCase,
 ) : ViewModel() {
     private var topicIdd = savedStateHandle.get<String>("topicId") ?: ""
 
@@ -28,7 +28,7 @@ class InterestsViewModel @Inject constructor(
 
     val uiState: StateFlow<InterestsUiState> = combine(
         selectedTopicId,
-        getFollowableTopics(sortBy = TopicSortField.ID),
+        getFollowableTopics(sortBy = HomeSortField.ID),
         InterestsUiState::Interests,
     ).stateIn(
         scope = viewModelScope,
@@ -43,7 +43,7 @@ class InterestsViewModel @Inject constructor(
     }
 
     fun onTopicClick(topicId: String?) {
-        savedStateHandle[TOPIC_ID_ARG] = topicId
+        //savedStateHandle[TOPIC_ID_ARG] = topicId
     }
 }
 
@@ -52,7 +52,7 @@ sealed interface InterestsUiState {
 
     data class Interests(
         val selectedTopicId: String?,
-        val topics: List<FollowableTopic>,
+        val topics: List<FollowableUITopic>,
     ) : InterestsUiState
 
     data object Empty : InterestsUiState

@@ -40,6 +40,7 @@ interface TopicDao {
     @Query(value = "SELECT * FROM topics")
     fun getTopicEntities(): Flow<List<TopicEntity>>
 
+
     @Query(value = "SELECT * FROM topics")
     suspend fun getOneOffTopicEntities(): List<TopicEntity>
 

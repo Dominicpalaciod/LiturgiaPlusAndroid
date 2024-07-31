@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import org.deiverbum.app.core.database.DatabaseMigrations.MIGRATION_1_2
+import org.deiverbum.app.core.database.di.DatabaseMigrations.MIGRATION_1_2
 import org.deiverbum.app.core.database.nia.NiaDatabase
 import javax.inject.Singleton
 

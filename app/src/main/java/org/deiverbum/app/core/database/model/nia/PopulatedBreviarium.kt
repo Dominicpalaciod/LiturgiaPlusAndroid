@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
+import org.deiverbum.app.core.database.model.external.PopulatedLiturgiaTypus
 import org.deiverbum.app.core.model.data.LiturgiaTypus
 import org.deiverbum.app.core.model.data.UserDataDynamic
 

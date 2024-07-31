@@ -3,6 +3,7 @@ package org.deiverbum.app.core.database.model.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.deiverbum.app.core.model.data.VirginAntiphon
 import org.deiverbum.app.util.Constants
 
 /**
@@ -20,4 +21,9 @@ data class VirginAntiphonEntity(
 
     @ColumnInfo(name = "antiphon")
     val antiphon: String
+)
+
+fun VirginAntiphonEntity.asExternalModel() = VirginAntiphon(
+    antiphonID = antiphonID,
+    antiphon = antiphon
 )

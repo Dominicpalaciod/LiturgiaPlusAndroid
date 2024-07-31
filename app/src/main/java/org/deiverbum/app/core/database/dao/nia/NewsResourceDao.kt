@@ -26,7 +26,7 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 import org.deiverbum.app.core.database.model.nia.NewsResourceEntity
 import org.deiverbum.app.core.database.model.nia.NewsResourceTopicCrossRef
-import org.deiverbum.app.core.database.model.nia.PopulatedNewsResource
+import org.deiverbum.app.core.database.model.external.PopulatedNewsResource
 
 /**
  * DAO for [NewsResource] and [NewsResourceEntity] access
